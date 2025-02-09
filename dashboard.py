@@ -76,8 +76,9 @@ def load_heatmap_data(file_path):
 # Function to generate heatmap
 def generate_heatmap(data):
     plt.figure(figsize=(10, 8))
-    heatmap = sns.heatmap(data, annot=True, cmap='coolwarm', cbar=True, square=True, linewidths=.5)
-    heatmap.set_facecolor('#2d2e81')  # Set the face color to black
+    sns.set(style="darkgrid")  # Set Seaborn style to darkgrid
+    ax = sns.heatmap(data, annot=True, cmap='coolwarm', cbar=True, square=True, linewidths=.5)
+    ax.set_facecolor('#000000')  # Set the face color to black
     plt.title("TOP 10 Companies in NIFTY 100 ESG")
     st.pyplot(plt)
 
@@ -131,7 +132,7 @@ company_descriptions = {
                  "The bank is known for its strong emphasis on customer service, innovative products, and extensive branch network.",
 
    "Infosys": "Infosys is a global leader in technology services and consulting, enabling clients in more than 50 countries. "
-               "Founded in 1981, Infosys has become a pioneer in the IT services industry, offering a wide range of services including application development, cloud computing, data analytics, and more. "
+               "Founded in 1981, Infosys has become a pioneer in the IT services industry, offering a wide range of services including application development, cloud computing, data analytics, and mor[...]
                "The company is renowned for its commitment to innovation, sustainability, and corporate social responsibility. "
                "With a strong focus on employee development and cutting-edge technology, Infosys continues to drive growth and deliver exceptional value to its clients.",
 
@@ -172,39 +173,36 @@ st.write(f"**EPS:** {eps}")
 st.write(f"**PE Ratio:** {pe_ratio}")
 st.write(f"**IPO Price:** {ipo_price if ipo_price else 'N/A'}")
 
-
-
-# Fetch live data for Nifty 100 ESG
-nifty100_esg_data = fetch_live_data("^NSE100ESG")
-
-
 # Load CSV data and display it
 csv_data = load_csv_data("nifty_100_esg_data.csv")
 st.header("Nifty 100 ESG Data from CSV")
 
-# Create two columns for the CSV data and the graph
-col_csv, col_graph = st.columns(2)
-
-with col_csv:
-    st.dataframe(csv_data)
+# Display CSV data
+st.dataframe(csv_data)
 
 # Display line graph using Date vs Open columns from the csv file
-with col_graph:
-    st.write("### Nifty 100 ESG Historical Data")
-    fig_csv = go.Figure()
-    csv_data['Date'] = pd.to_datetime(csv_data['Date'], errors='coerce')  # Ensure the Date column is in datetime format
-    fig_csv.add_trace(go.Scatter(x=csv_data['Date'], y=csv_data['Open'], mode='lines', name='Open', line=dict(color='#FFFFFF')))
-    fig_csv.update_layout(title='Nifty 100 ESG - Date vs Open',
-                          xaxis_title='Date',
-                          yaxis_title='Open Price',
-                          plot_bgcolor='#2d2e81',  # Set background color to the same color
-                          template='plotly_dark',
-                          xaxis=dict(
-                              tickmode='linear',
-                              dtick='M12',
-                              tickformat='%Y'
-                          ))
-    st.plotly_chart(fig_csv, use_container_width=True)
+st.write("### Nifty 100 ESG Historical Data")
+fig_csv = go.Figure()
+csv_data['Date'] = pd.to_datetime(csv_data['Date'], errors='coerce')  # Ensure the Date column is in datetime format
+fig_csv.add_trace(go.Scatter(x=csv_data['Date'], y=csv_data['Open'], mode='lines', name='Open', line=dict(color='#FFFFFF')))
+fig_csv.update_layout(title='Nifty 100 ESG - Date vs Open',
+                      xaxis_title='Date',
+                      yaxis_title='Open Price',
+                      plot_bgcolor='#2d2e81',  # Set background color to the same color
+                      template='plotly_dark',
+                      xaxis=dict(
+                          tickmode='linear',
+                          dtick='M12',
+                          tickformat='%Y'
+                      ))
+st.plotly_chart(fig_csv, use_container_width=True)
+
+# Fetch live data for Nifty 100 ESG
+nifty100_esg_data = fetch_live_data("^NSE100ESG")
+
+# Display live data
+st.header("Nifty 100 ESG Live Data")
+st.line_chart(nifty100_esg_data['Close'])
 
 # Function to generate heatmap
 def generate_heatmap(data):
