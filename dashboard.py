@@ -34,17 +34,23 @@ st.title("NIFTY 100 ESG DASHBOARD")
 # Load NIFTY 100 ESG data from CSV
 nifty_100_esg_data = pd.read_csv('nifty_100_esg_data.csv', parse_dates=['Date'])
 
+# Create a year column for grouping
+nifty_100_esg_data['Year'] = nifty_100_esg_data['Date'].dt.year
+
+# Group by year and calculate mean open prices
+yearly_data = nifty_100_esg_data.groupby('Year')['Open'].mean().reset_index()
+
 # Create a line chart for NIFTY 100 ESG historical open prices
 fig_nifty_esg = go.Figure()
-fig_nifty_esg.add_trace(go.Scatter(x=nifty_100_esg_data['Date'], y=nifty_100_esg_data['Open'], mode='lines', name='Open', line=dict(color='#FFA500')))
-fig_nifty_esg.update_layout(title='NIFTY 100 ESG Index - Historical Open Prices',
-                            xaxis_title='Date',
+fig_nifty_esg.add_trace(go.Scatter(x=yearly_data['Year'], y=yearly_data['Open'], mode='lines', name='Open', line=dict(color='#FFA500')))
+fig_nifty_esg.update_layout(title='NIFTY 100 ESG Index - Yearly Open Prices',
+                            xaxis_title='Year',
                             yaxis_title='Open Price',
                             plot_bgcolor='#2d2e81',
                             template='plotly_dark')
 
 # Display the NIFTY 100 ESG line chart
-st.write("### NIFTY 100 ESG Index - Historical Open Prices")
+st.write("### NIFTY 100 ESG Index - Yearly Open Prices")
 st.plotly_chart(fig_nifty_esg, use_container_width=True)
 
 # List of companies
@@ -136,4 +142,4 @@ company_descriptions = {
 # Display the dynamic description in the second column
 with col2:
     st.write("### ABOUT COMPANY")
-    st.write(company_descriptions[selected_company])
+    st.write(company_descriptions[selected_company]
