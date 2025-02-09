@@ -50,6 +50,17 @@ def get_financial_data(ticker):
     ipo_price = None  # Replace with actual IPO price if available
     return eps, pe_ratio, ipo_price
 
+# Function to get historical data for Nifty 100 ESG for the last 5 years
+def get_historical_data():
+    symbol = "^NSE100ESG"
+    stock = yf.Ticker(symbol)
+    return stock.history(period="5y")
+
+# Function to read CSV file
+@st.cache_data
+def load_csv_data(file_path):
+    return pd.read_csv(file_path)
+
 # Create a dropdown for company selection below the line chart section
 selected_company = st.selectbox('Select a Company', companies)
 
@@ -103,7 +114,7 @@ company_descriptions = {
                "Founded in 1981, Infosys has become a pioneer in the IT services industry, offering a wide range of services including application development, cloud computing, data analytics, and more. "
                "The company is renowned for its commitment to innovation, sustainability, and corporate social responsibility. "
                "With a strong focus on employee development and cutting-edge technology, Infosys continues to drive growth and deliver exceptional value to its clients.",
-
+   
     "Larsen & Toubro": "Larsen & Toubro is an Indian multinational engaged in technology, engineering, construction, manufacturing, and financial services. "
                        "Established in 1938, L&T has grown into a conglomerate with a presence in over 30 countries. "
                        "The company is known for its expertise in executing large and complex projects across various sectors, including infrastructure, power, defense, and aerospace. "
@@ -139,3 +150,13 @@ st.write(f"### Financial Data for {selected_company}")
 st.write(f"**EPS:** {eps}")
 st.write(f"**PE Ratio:** {pe_ratio}")
 st.write(f"**IPO Price:** {ipo_price if ipo_price else 'N/A'}")
+
+# Fetch and display historical data for Nifty 100 ESG
+st.header("Nifty 100 ESG Historical Data (Last 5 Years)")
+historical_data = get_historical_data()
+st.line_chart(historical_data['Close'])
+
+# Load CSV data and display it
+csv_data = load_csv_data("nifty_100_esg_data.csv")
+st.header("Nifty 100 ESG Data from CSV")
+st.dataframe(csv_data)
