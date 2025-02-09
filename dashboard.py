@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 import yfinance as yf
+import requests
 from datetime import datetime
 
 # Set custom background image for the dashboard
@@ -40,6 +41,15 @@ def get_stock_data(ticker, period='1y'):
     stock = yf.Ticker(ticker)
     return stock.history(period=period)
 
+# Function to get financial data (EPS, PE ratio, IPO price)
+def get_financial_data(ticker):
+    stock = yf.Ticker(ticker)
+    info = stock.info
+    eps = info.get("trailingEps")
+    pe_ratio = info.get("trailingPE")
+    ipo_price = None  # Replace with actual IPO price if available
+    return eps, pe_ratio, ipo_price
+
 # Create a dropdown for company selection below the line chart section
 selected_company = st.selectbox('Select a Company', companies)
 
@@ -58,7 +68,8 @@ ticker_map = {
     "Reliance Industries": "RELIANCE.NS",
     "Wipro": "WIPRO.NS"
 }
-data = get_stock_data(ticker_map[selected_company], period=timeframe)
+ticker = ticker_map[selected_company]
+data = get_stock_data(ticker, period=timeframe)
 
 # Create a line chart
 fig = go.Figure()
@@ -87,29 +98,29 @@ company_descriptions = {
                  "Founded in 1994, the bank has rapidly grown to become one of the largest and most trusted financial institutions in India. "
                  "HDFC Bank offers a comprehensive suite of banking and financial services, including retail banking, wholesale banking, and treasury operations. "
                  "The bank is known for its strong emphasis on customer service, innovative products, and extensive branch network.",
-    
+
     "Infosys": "Infosys is a global leader in technology services and consulting, enabling clients in more than 50 countries. "
-               "Founded in 1981, Infosys has become a pioneer in the IT services industry, offering a wide range of services including application development, cloud computing, data analytics, and digital transformation. "
+               "Founded in 1981, Infosys has become a pioneer in the IT services industry, offering a wide range of services including application development, cloud computing, data analytics, and more. "
                "The company is renowned for its commitment to innovation, sustainability, and corporate social responsibility. "
                "With a strong focus on employee development and cutting-edge technology, Infosys continues to drive growth and deliver exceptional value to its clients.",
-    
+
     "Larsen & Toubro": "Larsen & Toubro is an Indian multinational engaged in technology, engineering, construction, manufacturing, and financial services. "
                        "Established in 1938, L&T has grown into a conglomerate with a presence in over 30 countries. "
                        "The company is known for its expertise in executing large and complex projects across various sectors, including infrastructure, power, defense, and aerospace. "
                        "L&T's commitment to quality, innovation, and sustainability has earned it a reputation as one of the most respected and reliable companies in India and beyond.",
-    
+
     "Tata Consultancy Services": "Tata Consultancy Services is a global leader in IT services, consulting, and business solutions. "
                                  "Founded in 1968, TCS is part of the Tata Group, India's largest industrial conglomerate. "
                                  "The company offers a comprehensive range of services, including software development, business process outsourcing, and IT infrastructure management. "
                                  "TCS is known for its customer-centric approach, innovative solutions, and strong focus on sustainability and corporate governance. "
                                  "With a presence in over 46 countries, TCS continues to drive digital transformation for businesses worldwide.",
-    
+
     "Reliance Industries": "Reliance Industries is a conglomerate holding company headquartered in Mumbai, India, engaged in diverse businesses. "
                            "Founded in 1966, Reliance has grown to become one of the largest and most profitable companies in India. "
                            "The company's business interests span across petrochemicals, refining, oil and gas exploration, retail, telecommunications, and digital services. "
                            "Reliance is known for its relentless pursuit of growth and innovation, making significant investments in technology and sustainable practices. "
                            "With a strong focus on customer satisfaction and operational excellence, Reliance continues to set new benchmarks in the Indian business landscape.",
-    
+
     "Wipro": "Wipro is a leading global information technology, consulting, and business process services company. "
              "Established in 1945, Wipro has evolved from a vegetable oil manufacturer to a global IT services powerhouse. "
              "The company offers a wide range of services, including IT consulting, application development, cloud computing, and cybersecurity. "
@@ -121,3 +132,10 @@ company_descriptions = {
 with col2:
     st.write("### ABOUT COMPANY")
     st.write(company_descriptions[selected_company])
+
+# Fetch and display financial data
+eps, pe_ratio, ipo_price = get_financial_data(ticker)
+st.write(f"### Financial Data for {selected_company}")
+st.write(f"**EPS:** {eps}")
+st.write(f"**PE Ratio:** {pe_ratio}")
+st.write(f"**IPO Price:** {ipo_price if ipo_price else 'N/A'}")
