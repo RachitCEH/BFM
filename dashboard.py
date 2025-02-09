@@ -130,7 +130,7 @@ company_descriptions = {
                  "The bank is known for its strong emphasis on customer service, innovative products, and extensive branch network.",
 
     "Infosys": "Infosys is a global leader in technology services and consulting, enabling clients in more than 50 countries. "
-               "Founded in 1981, Infosys has become a pioneer in the IT services industry, offering a wide range of services including application development, cloud computing, data analytics, and more. "
+               "Founded in 1981, Infosys has become a pioneer in the IT services industry, offering a wide range of services including application development, cloud computing, data analytics, and mor[...]
                "The company is renowned for its commitment to innovation, sustainability, and corporate social responsibility. "
                "With a strong focus on employee development and cutting-edge technology, Infosys continues to drive growth and deliver exceptional value to its clients.",
 
@@ -210,7 +210,7 @@ with col_graph:
                           ))
     st.plotly_chart(fig_csv, use_container_width=True)
 
-# Load heatmap data and generate heatmap
-heatmap_data = load_heatmap_data("Heatmap.csv")
+# Load and display heatmap data from HEATMAP - Sheet1.csv
+heatmap_data = pd.read_csv("HEATMAP - Sheet1.csv")
 st.header("TOP 10 Companies in NIFTY 100 ESG")
 generate_heatmap(heatmap_data)
