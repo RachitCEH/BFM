@@ -24,8 +24,8 @@ border-radius: 10px;  # Rounded corners
 [data-testid="stVerticalBlock"] > div {
 margin: 10px 0;  # Reduced margin to decrease gaps between elements
 }
-h1, h2, h3, h4, h5, h6 {
-text-align: center;  # Center align all headers
+h1, h3 {
+text-align: center;  # Center align the header and subheaders
 }
 </style>
 '''
@@ -221,10 +221,19 @@ datasets = {
     "Tata Consultancy Services": tcs_data
 }
 
+colors = {
+    "HDFC Bank": "#FF5733",
+    "Wipro": "#33FF57",
+    "Infosys": "#3357FF",
+    "Larsen & Toubro": "#FF33A1",
+    "Reliance Industries": "#33FFF5",
+    "Tata Consultancy Services": "#FF33FF"
+}
+
 for company, data in datasets.items():
     data['Date'] = pd.to_datetime(data['Date'], errors='coerce')
-    fig_pred.add_trace(go.Scatter(x=data['Date'], y=data['Open'], mode='lines', name=f'{company} Open', line=dict(color='#FFFFFF')))
-    fig_pred.add_trace(go.Scatter(x=data['Date'], y=data['Predicted Opening Price'], mode='lines', name=f'{company} Predicted Opening Price', line=dict(color='#FF5733')))
+    fig_pred.add_trace(go.Scatter(x=data['Date'], y=data['Open'], mode='lines', name=f'{company} Open', line=dict(color=colors[company])))
+    fig_pred.add_trace(go.Scatter(x=data['Date'], y=data['Predicted Opening Price'], mode='lines', name=f'{company} Predicted Opening Price', line=dict(color=colors[company])))
 
 fig_pred.update_layout(title='Prediction Graph - Open vs Predicted Opening Price',
                        xaxis_title='Date',
