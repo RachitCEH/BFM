@@ -40,12 +40,6 @@ def get_stock_data(ticker, period='1y'):
     stock = yf.Ticker(ticker)
     return stock.history(period=period)
 
-# Function to calculate moving averages
-def add_moving_averages(df, windows=[20, 50, 100]):
-    for window in windows:
-        df[f'MA{window}'] = df['Close'].rolling(window=window).mean()
-    return df
-
 # Function to get support levels
 def get_support_levels(df):
     levels = []
@@ -71,9 +65,6 @@ ticker_map = {
 }
 data = get_stock_data(ticker_map[selected_company], period=timeframe)
 
-# Add moving averages to the data
-data = add_moving_averages(data)
-
 # Get support levels
 support_levels = get_support_levels(data)
 
@@ -82,10 +73,6 @@ fig = go.Figure()
 
 # Add the main line for stock prices
 fig.add_trace(go.Scatter(x=data.index, y=data['Close'], mode='lines', name='Close', line=dict(color='#FFFFFF')))
-
-# Add moving averages to the chart
-for window in [20, 50, 100]:
-    fig.add_trace(go.Scatter(x=data.index, y=data[f'MA{window}'], mode='lines', name=f'MA{window}', line=dict(dash='dash')))
 
 # Add support levels to the chart
 for level in support_levels:
