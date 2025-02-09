@@ -212,5 +212,7 @@ with col_graph:
 
 # Load and display heatmap data from HEATMAP - Sheet1.csv
 heatmap_data = pd.read_csv("HEATMAP - Sheet1.csv")
+heatmap_data.set_index('Company Name', inplace=True)
+heatmap_data = heatmap_data[['Weightage (%)']].astype(float)
 st.header("TOP 10 Companies in NIFTY 100 ESG")
 generate_heatmap(heatmap_data)
