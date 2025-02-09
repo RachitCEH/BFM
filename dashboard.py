@@ -215,7 +215,9 @@ with col_graph:
 # Function to generate heatmap
 def generate_heatmap(data):
     plt.figure(figsize=(10, 8))
-    sns.heatmap(data, annot=True, cmap='coolwarm', cbar=True, square=True, linewidths=.5)
+    sns.set(style="darkgrid")  # Set Seaborn style to darkgrid
+    ax = sns.heatmap(data, annot=True, cmap='coolwarm', cbar=True, square=True, linewidths=.5)
+    ax.set_facecolor('#000000')  # Set the face color to black
     plt.title("TOP 10 Companies in NIFTY 100 ESG")
     st.pyplot(plt)
 
