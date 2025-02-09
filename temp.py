@@ -9,18 +9,28 @@ page_bg_img = '''
 background: url("https://raw.githubusercontent.com/RachitCEH/BFM/main/abstract-futuristic-technology-blank-wallpaper-free-vector.jpg");
 background-size: cover;
 }
+[data-testid="stMarkdownContainer"] {
+background-color: #2d2e81;  # Background color
+color: white;  # White font color
+padding: 20px;  # Padding inside the text box
+margin: 20px;  # Margin around the text box
+border-radius: 10px;  # Rounded corners
+}
+[data-testid="stVerticalBlock"] > div {
+margin: 20px 0;  # Add margin to the text elements
+}
+h1, h3 {
+text-align: center;  # Center align the header and subheaders
+}
 </style>
 '''
 st.markdown(page_bg_img, unsafe_allow_html=True)
 
+# Add the header for the entire dashboard
+st.title("NIFTY 100 ESG DASHBOARD")
+
 # List of companies
 companies = ["HDFC Bank", "Infosys", "Larsen & Toubro", "Tata Consultancy Services", "Reliance Industries", "Wipro"]
-
-# Create a dropdown for company selection
-selected_company = st.selectbox('Select a Company', companies)
-
-# Display the selected company name on the dashboard
-st.write(f"Selected Company: {selected_company}")
 
 # Load the CSV file from the repository
 url = 'https://raw.githubusercontent.com/RachitCEH/BFM/main/nifty_100_esg_data.csv'
@@ -30,7 +40,7 @@ data = pd.read_csv(url)
 data['Date'] = pd.to_datetime(data['Date'], format='%d/%m/%Y')
 
 # Assuming the dominant color from the new image is a shade of blue
-dominant_color = '#0000FF'  # Example dominant color (blue)
+dominant_color = '#FFFFFF'  # White color
 
 # Create a line chart
 fig = go.Figure()
@@ -41,7 +51,7 @@ fig.add_trace(go.Scatter(x=data['Date'], y=data['Open'], mode='lines', name='Ope
 fig.update_layout(title='NIFTY 100 NSE - OPEN PRICE TREND',
                   xaxis_title='Date',
                   yaxis_title='Open Price',
-                  plot_bgcolor='white',  # Set background color to white
+                  plot_bgcolor='#2d2e81',  # Set background color to the same color
                   template='plotly_dark')
 
 # Create two equal-sized columns for the chart and the description
@@ -60,4 +70,12 @@ with col2:
     The index includes companies that are leaders in ESG practices while also considering their financial performance. 
     It aims to provide investors with an ESG-compliant benchmark that represents the top 100 companies in India. 
     This allows investors to make more informed decisions.
+    
+    By integrating ESG criteria, the index promotes sustainable and responsible investment practices.
     """)
+
+# Create a dropdown for company selection below the line chart section
+selected_company = st.selectbox('Select a Company', companies)
+
+# Display the selected company name on the dashboard
+st.write(f"Selected Company: {selected_company}")
