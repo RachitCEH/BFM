@@ -144,7 +144,7 @@ st.header("Real-Time Stock Price Table")
 
 # Function to fetch live data from Alpha Vantage
 def fetch_alpha_vantage_data():
-    API_KEY = "your_api_key_here"  # Replace with your Alpha Vantage API key
+    API_KEY = "ZRF0P3GRP8P9078H"  # Replace with your Alpha Vantage API key
     symbol = "NSE:NIFTY100ESG"
     url = f"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={symbol}&interval=5min&apikey={API_KEY}"
     response = requests.get(url)
@@ -192,6 +192,6 @@ if st.button("Refresh Data"):
     st.experimental_rerun()
 
 # Auto-refresh every 30 seconds
-st.experimental_singleton.clear()
+st.cache_data.clear()
 time.sleep(30)
 st.experimental_rerun()
