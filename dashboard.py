@@ -212,9 +212,9 @@ with col_graph:
                           ))
     st.plotly_chart(fig_csv, use_container_width=True)
 
-# Load and display heatmap data from HEATMAP - Sheet1.csv
-heatmap_data = pd.read_csv("HEATMAP - Sheet1.csv")
-heatmap_data.set_index('Company Name', inplace=True)
-heatmap_data = heatmap_data[['Weightage (%)']].astype(float)
-st.header("TOP 10 Companies in NIFTY 100 ESG")
-generate_heatmap(heatmap_data)
+# Function to generate heatmap
+def generate_heatmap(data):
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(data, annot=True, cmap='coolwarm', cbar=True, square=True, linewidths=.5)
+    plt.title("TOP 10 Companies in NIFTY 100 ESG")
+    st.pyplot(plt)
