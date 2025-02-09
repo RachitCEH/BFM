@@ -5,7 +5,7 @@ import plotly.graph_objects as go
 # Set custom background image for the dashboard
 page_bg_img = '''
 <style>
-body {
+[data-testid="stAppViewContainer"] {
 background: url("https://raw.githubusercontent.com/RachitCEH/BFM/main/29d612.webp");
 background-size: cover;
 }
