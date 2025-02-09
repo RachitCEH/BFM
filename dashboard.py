@@ -170,7 +170,7 @@ with col_csv:
 with col_graph:
     st.write("### Nifty 100 ESG Historical Data")
     fig_csv = go.Figure()
-    fig_csv.add_trace(go.Scatter(y=csv_data['Open'], mode='lines', name='Open', line=dict(color='#FFFFFF')))
+    fig_csv.add_trace(go.Scatter(x=csv_data['Date'],y=csv_data['Open'], mode='lines', name='Open', line=dict(color='#FFFFFF')))
     fig_csv.update_layout(title='Nifty 100 ESG - Date vs Open',
                           xaxis_title='Date',
                           yaxis_title='Open Price',
