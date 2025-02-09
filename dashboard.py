@@ -19,7 +19,7 @@ margin: 20px;  # Margin around the text box
 border-radius: 10px;  # Rounded corners
 }
 [data-testid="stVerticalBlock"] > div {
-margin: 20px 0;  # Add margin to the text elements
+margin: 10px 0;  # Reduced margin to decrease gaps between elements
 }
 h1, h3 {
 text-align: center;  # Center align the header and subheaders
