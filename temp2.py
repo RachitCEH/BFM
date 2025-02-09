@@ -59,7 +59,7 @@ def get_historical_data():
 # Function to read CSV file
 @st.cache_data
 def load_csv_data(file_path):
-    return pd.read_csv(file_path)
+    return pd.read_csv(file_path, parse_dates=['Date'], dayfirst=True)
 
 # Create a dropdown for company selection below the line chart section
 selected_company = st.selectbox('Select a Company', companies)
@@ -159,18 +159,27 @@ st.line_chart(historical_data['Close'])
 # Load CSV data and display it
 csv_data = load_csv_data("nifty_100_esg_data.csv")
 st.header("Nifty 100 ESG Data from CSV")
-st.dataframe(csv_data)
+
+# Create two columns for the CSV data and the graph
+col_csv, col_graph = st.columns(2)
+
+with col_csv:
+    st.dataframe(csv_data)
 
 # Display line graph using Date vs Open columns from the csv file
-st.header("Nifty 100 ESG - Date vs Open")
-fig_csv = go.Figure()
-fig_csv.add_trace(go.Scatter(x=csv_data['Date'], y=csv_data['Open'], mode='lines', name='Open', line=dict(color='#FFFFFF')))
-fig_csv.update_layout(title='Nifty 100 ESG - Date vs Open',
-                      xaxis_title='Date',
-                      yaxis_title='Open Price',
-                      plot_bgcolor='#2d2e81',  # Set background color to the same color
-                      template='plotly_dark')
-
-with col2:
-    st.write("### Nifty 100 ESG - Date vs Open")
+with col_graph:
+    st.write("### Nifty 100 ESG Historical Data")
+    fig_csv = go.Figure()
+    csv_data['Date'] = pd.to_datetime(csv_data['Date'], errors='coerce')  # Ensure the Date column is in datetime format
+    fig_csv.add_trace(go.Scatter(x=csv_data['Date'], y=csv_data['Open'], mode='lines', name='Open', line=dict(color='#FFFFFF')))
+    fig_csv.update_layout(title='Nifty 100 ESG - Date vs Open',
+                          xaxis_title='Date',
+                          yaxis_title='Open Price',
+                          plot_bgcolor='#2d2e81',  # Set background color to the same color
+                          template='plotly_dark',
+                          xaxis=dict(
+                              tickmode='linear',
+                              dtick='M12',
+                              tickformat='%Y'
+                          ))
     st.plotly_chart(fig_csv, use_container_width=True)
