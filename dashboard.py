@@ -12,8 +12,12 @@ background-size: cover;
 [data-testid="stMarkdownContainer"] {
 background-color: black;  # Black background color
 color: white;  # White font color
-padding: 20px;
+padding: 20px;  # Padding inside the text box
+margin: 20px;  # Margin around the text box
 border-radius: 0px;  # Rectangle shape
+}
+[data-testid="stVerticalBlock"] > div {
+margin: 20px 0;  # Add margin to the text elements
 }
 </style>
 '''
