@@ -13,7 +13,11 @@ background-size: cover;
 background-color: black;  # Black background color
 color: white;  # White font color
 padding: 20px;
+margin: 20px;  # Add margin to the text shape box
 border-radius: 0px;  # Rectangle shape
+}
+[data-testid="stVerticalBlock"] > div {
+margin: 20px 0;  # Add margin to the text elements
 }
 </style>
 '''
