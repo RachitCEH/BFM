@@ -1,9 +1,6 @@
 import streamlit as st
 import pandas as pd
-import yfinance as yf
 import plotly.graph_objects as go
-import requests
-import numpy as np
 
 # Load the CSV file from the repository
 url = 'https://raw.githubusercontent.com/RachitCEH/BFM/main/nifty_100_esg_data.csv'
@@ -23,5 +20,9 @@ fig.update_layout(title='Open Prices vs Date',
                   yaxis_title='Open Price',
                   template='plotly_dark')
 
-# Display the chart in Streamlit
-st.plotly_chart(fig)
+# Divide the page into two equal-sized columns
+col1, col2 = st.columns(2)
+
+# Display the chart in the first column
+with col1:
+    st.plotly_chart(fig)
