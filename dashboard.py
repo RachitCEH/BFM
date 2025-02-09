@@ -57,6 +57,16 @@ def get_financial_data(ticker):
     ipo_price = None  # Replace with actual IPO price if available
     return eps, pe_ratio, ipo_price
 
+# IPO price data
+ipo_prices = {
+    "HDFC Bank": 10,
+    "Infosys": 95,
+    "Larsen & Toubro": 51,
+    "Tata Consultancy Services": 850,
+    "Reliance Industries": 10,
+    "Wipro": 1
+}
+
 # Function to get historical data for Nifty 100 ESG for the last 5 years
 def get_historical_data():
     symbol = "^NSE100ESG"
@@ -194,10 +204,11 @@ with col2:
 
 # Fetch and display financial data
 eps, pe_ratio, ipo_price = get_financial_data(ticker)
+ipo_price = ipo_prices[selected_company]  # Get the IPO price from the dictionary
 st.write(f"### Financial Data for {selected_company}")
 st.write(f"**EPS:** {eps}")
 st.write(f"**PE Ratio:** {pe_ratio}")
-st.write(f"**IPO Price:** {ipo_price if ipo_price else 'N/A'}")
+st.write(f"**IPO Price:** {ipo_price}")
 
 # Load prediction data
 hdfc_data = load_csv_data("HDFC_Bank_stock_data.csv")
