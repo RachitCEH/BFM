@@ -19,6 +19,9 @@ border-radius: 0px;  # Rectangle shape
 [data-testid="stVerticalBlock"] > div {
 margin: 20px 0;  # Add margin to the text elements
 }
+h1 {
+text-align: center;  # Center align the header
+}
 </style>
 '''
 st.markdown(page_bg_img, unsafe_allow_html=True)
