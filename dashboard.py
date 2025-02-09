@@ -63,11 +63,12 @@ def fetch_eps_pe_ipo_kpi(ticker):
     stock = yf.Ticker(ticker)
     info = stock.info
     ipo_dates = {
-        "ADANIGREEN.NS": "June 2018",
-        "JSWENERGY.NS": "January 2010",
-        "NTPC.NS": "October 2004",
-        "NHPC.NS": "August 2009",
-        "POWERGRID.NS": "October 2007"
+        "HDFCBANK.NS": "1995",
+        "INFY.NS": "1993",
+        "LT.NS": "1950",
+        "RELIANCE.NS": "1977",
+        "TCS.NS": "2004",
+        "WIPRO.NS": "1945"
     }
     data = {
         "EPS": info.get("trailingEps"),
@@ -198,12 +199,12 @@ def main():
     # Sidebar
     st.sidebar.header("Select Company")
     companies = {
-        "Adani Green Energy": "ADANIGREEN.NS",
-        "Tata Power": "TATAPOWER.NS",
-        "Jsw Energy": "JSWENERGY.NS",
-        "NTPC": "NTPC.NS",
-        "Power Grid Corp": "POWERGRID.NS",
-        "NHPC": "NHPC.NS"
+        "HDFC Bank": "HDFCBANK.NS",
+        "Infosys": "INFY.NS",
+        "Larsen & Toubro": "LT.NS",
+        "Reliance Industries": "RELIANCE.NS",
+        "Tata Consultancy Services": "TCS.NS",
+        "Wipro": "WIPRO.NS"
     }
     company = st.sidebar.selectbox("Choose a company", list(companies.keys()))
     ticker = companies[company]
