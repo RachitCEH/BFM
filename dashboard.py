@@ -37,23 +37,24 @@ nifty_100_esg_data = pd.read_csv('nifty_100_esg_data.csv', parse_dates=['Date'])
 # Ensure the 'Date' column is parsed as datetime
 nifty_100_esg_data['Date'] = pd.to_datetime(nifty_100_esg_data['Date'])
 
-# Create a year column for grouping
-nifty_100_esg_data['Year'] = nifty_100_esg_data['Date'].dt.year
+# Create a month column for grouping
+nifty_100_esg_data['Month'] = nifty_100_esg_data['Date'].dt.to_period('M')
 
-# Group by year and calculate mean open prices
-yearly_data = nifty_100_esg_data.groupby('Year')['Open'].mean().reset_index()
+# Group by month and calculate mean open prices
+monthly_data = nifty_100_esg_data.groupby('Month')['Open'].mean().reset_index()
+monthly_data['Month'] = monthly_data['Month'].dt.to_timestamp()
 
-# Create a line chart for NIFTY 100 ESG historical open prices (Year-on-Year)
+# Create a line chart for NIFTY 100 ESG historical open prices (Month-on-Month)
 fig_nifty_esg = go.Figure()
-fig_nifty_esg.add_trace(go.Scatter(x=yearly_data['Year'], y=yearly_data['Open'], mode='lines', name='Open', line=dict(color='#FFA500')))
-fig_nifty_esg.update_layout(title='NIFTY 100 ESG Index - Yearly Open Prices',
-                            xaxis_title='Year',
+fig_nifty_esg.add_trace(go.Scatter(x=monthly_data['Month'], y=monthly_data['Open'], mode='lines', name='Open', line=dict(color='#FFA500')))
+fig_nifty_esg.update_layout(title='NIFTY 100 ESG Index - Monthly Open Prices',
+                            xaxis_title='Month',
                             yaxis_title='Open Price',
                             plot_bgcolor='#2d2e81',
                             template='plotly_dark')
 
-# Display the NIFTY 100 ESG line chart (Year-on-Year)
-st.write("### NIFTY 100 ESG Index - Yearly Open Prices")
+# Display the NIFTY 100 ESG line chart (Month-on-Month)
+st.write("### NIFTY 100 ESG Index - Monthly Open Prices")
 st.plotly_chart(fig_nifty_esg, use_container_width=True)
 
 # List of companies
