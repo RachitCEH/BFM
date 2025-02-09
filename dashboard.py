@@ -82,6 +82,33 @@ def generate_heatmap(data):
     plt.title("TOP 10 Companies in NIFTY 100 ESG")
     st.pyplot(plt)
 
+# Load CSV data and display it
+csv_data = load_csv_data("nifty_100_esg_data.csv")
+st.header("Nifty 100 ESG Data from CSV")
+
+# Display CSV data
+st.dataframe(csv_data, use_container_width=True)
+
+# Display line graph using Date vs Open columns from the csv file
+st.write("### Nifty 100 ESG Historical Data")
+fig_csv = go.Figure()
+csv_data['Date'] = pd.to_datetime(csv_data['Date'], errors='coerce')  # Ensure the Date column is in datetime format
+fig_csv.add_trace(go.Scatter(x=csv_data['Date'], y=csv_data['Open'], mode='lines', name='Open', line=dict(color='#FFFFFF')))
+fig_csv.update_layout(title='Nifty 100 ESG - Date vs Open',
+                      xaxis_title='Date',
+                      yaxis_title='Open Price',
+                      plot_bgcolor='#2d2e81',  # Set background color to the same color
+                      template='plotly_dark',
+                      xaxis=dict(
+                          tickmode='linear',
+                          dtick='M12',
+                          tickformat='%Y'
+                      ))
+st.plotly_chart(fig_csv, use_container_width=True)
+
+# Fetch live data for Nifty 100 ESG
+nifty100_esg_data = fetch_live_data("^NSE100ESG")
+
 # Create a dropdown for company selection below the line chart section
 selected_company = st.selectbox('Select a Company', companies)
 
@@ -136,8 +163,6 @@ company_descriptions = {
                "The company is renowned for its commitment to innovation, sustainability, and corporate social responsibility. "
                "With a strong focus on employee development and cutting-edge technology, Infosys continues to drive growth and deliver exceptional value to its clients.",
 
-
-
     "Larsen & Toubro": "Larsen & Toubro is an Indian multinational engaged in technology, engineering, construction, manufacturing, and financial services. "
                        "Established in 1938, L&T has grown into a conglomerate with a presence in over 30 countries. "
                        "The company is known for its expertise in executing large and complex projects across various sectors, including infrastructure, power, defense, and aerospace. "
@@ -173,42 +198,6 @@ st.write(f"### Financial Data for {selected_company}")
 st.write(f"**EPS:** {eps}")
 st.write(f"**PE Ratio:** {pe_ratio}")
 st.write(f"**IPO Price:** {ipo_price if ipo_price else 'N/A'}")
-
-# Load CSV data and display it
-csv_data = load_csv_data("nifty_100_esg_data.csv")
-st.header("Nifty 100 ESG Data from CSV")
-
-# Display CSV data
-st.dataframe(csv_data)
-
-# Display line graph using Date vs Open columns from the csv file
-st.write("### Nifty 100 ESG Historical Data")
-fig_csv = go.Figure()
-csv_data['Date'] = pd.to_datetime(csv_data['Date'], errors='coerce')  # Ensure the Date column is in datetime format
-fig_csv.add_trace(go.Scatter(x=csv_data['Date'], y=csv_data['Open'], mode='lines', name='Open', line=dict(color='#FFFFFF')))
-fig_csv.update_layout(title='Nifty 100 ESG - Date vs Open',
-                      xaxis_title='Date',
-                      yaxis_title='Open Price',
-                      plot_bgcolor='#2d2e81',  # Set background color to the same color
-                      template='plotly_dark',
-                      xaxis=dict(
-                          tickmode='linear',
-                          dtick='M12',
-                          tickformat='%Y'
-                      ))
-st.plotly_chart(fig_csv, use_container_width=True)
-
-# Fetch live data for Nifty 100 ESG
-nifty100_esg_data = fetch_live_data("^NSE100ESG")
-
-# Function to generate heatmap
-def generate_heatmap(data):
-    plt.figure(figsize=(10, 8))
-    sns.set(style="darkgrid")  # Set Seaborn style to darkgrid
-    ax = sns.heatmap(data, annot=True, cmap='coolwarm', cbar=True, square=True, linewidths=.5)
-    ax.set_facecolor('#000000')  # Set the face color to black
-    plt.title("TOP 10 Companies in NIFTY 100 ESG")
-    st.pyplot(plt)
 
 # Load and display heatmap data from HEATMAP - Sheet1.csv
 heatmap_data = pd.read_csv("HEATMAP - Sheet1.csv")
