@@ -79,12 +79,12 @@ def generate_heatmap(data):
     sns.set(style="darkgrid")  # Set Seaborn style to darkgrid
     ax = sns.heatmap(data, annot=True, cmap='coolwarm', cbar=True, square=True, linewidths=.5)
     ax.set_facecolor('#000000')  # Set the face color to black
-    plt.title("TOP 10 Companies in NIFTY 100 ESG")
+    plt.title("TOP 10 Companies in NIFTY 100 ESG", loc='center')
     st.pyplot(plt)
 
 # Load CSV data and display it
 csv_data = load_csv_data("nifty_100_esg_data.csv")
-st.header("Historical Data Of NIFTY 100 ESG Index")
+st.header("Historical Data Of NIFTY 100 ESG Index", anchor='center')
 
 # Display CSV data
 st.dataframe(csv_data, use_container_width=True)
