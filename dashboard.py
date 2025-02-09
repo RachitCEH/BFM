@@ -142,4 +142,4 @@ company_descriptions = {
 # Display the dynamic description in the second column
 with col2:
     st.write("### ABOUT COMPANY")
-    st.write(company_descriptions[selected_company]
+    st.write(company_descriptions[selected_company])
