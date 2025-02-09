@@ -82,7 +82,29 @@ def generate_heatmap(data):
     plt.title("TOP 10 Companies in NIFTY 100 ESG")
     st.pyplot(plt)
 
+# Load CSV data and display it
+csv_data = load_csv_data("nifty_100_esg_data.csv")
+st.header("Historical Data Of NIFTY 100 ESG Index")
 
+# Display CSV data
+st.dataframe(csv_data, use_container_width=True)
+
+# Display line graph using Date vs Open columns from the csv file
+st.write("### Nifty 100 ESG Historical Data")
+fig_csv = go.Figure()
+csv_data['Date'] = pd.to_datetime(csv_data['Date'], errors='coerce')  # Ensure the Date column is in datetime format
+fig_csv.add_trace(go.Scatter(x=csv_data['Date'], y=csv_data['Open'], mode='lines', name='Open', line=dict(color='#FFFFFF')))
+fig_csv.update_layout(title='Nifty 100 ESG - Date vs Open',
+                      xaxis_title='Date',
+                      yaxis_title='Open Price',
+                      plot_bgcolor='#2d2e81',  # Set background color to the same color
+                      template='plotly_dark',
+                      xaxis=dict(
+                          tickmode='linear',
+                          dtick='M12',
+                          tickformat='%Y'
+                      ))
+st.plotly_chart(fig_csv, use_container_width=True)
 
 # Fetch live data for Nifty 100 ESG
 nifty100_esg_data = fetch_live_data("^NSE100ESG")
@@ -136,7 +158,7 @@ company_descriptions = {
                  "HDFC Bank offers a comprehensive suite of banking and financial services, including retail banking, wholesale banking, and treasury operations. "
                  "The bank is known for its strong emphasis on customer service, innovative products, and extensive branch network.",
 
-   "Infosys": "Infosys is a global leader in technology services and consulting, enabling clients in more than 50 countries. "
+    "Infosys": "Infosys is a global leader in technology services and consulting, enabling clients in more than 50 countries. "
                "Founded in 1981, Infosys has become a pioneer in the IT services industry, offering a wide range of services including application development, cloud computing, data analytics, and more. "
                "The company is renowned for its commitment to innovation, sustainability, and corporate social responsibility. "
                "With a strong focus on employee development and cutting-edge technology, Infosys continues to drive growth and deliver exceptional value to its clients.",
@@ -177,33 +199,48 @@ st.write(f"**EPS:** {eps}")
 st.write(f"**PE Ratio:** {pe_ratio}")
 st.write(f"**IPO Price:** {ipo_price if ipo_price else 'N/A'}")
 
-# Load CSV data and display it
-csv_data = load_csv_data("nifty_100_esg_data.csv")
-st.header("Historical Data Of NIFTY 100 ESG Index")
-
-# Display CSV data
-st.dataframe(csv_data, use_container_width=True)
-
-# Display line graph using Date vs Open columns from the csv file
-st.write("### Nifty 100 ESG Trend")
-fig_csv = go.Figure()
-csv_data['Date'] = pd.to_datetime(csv_data['Date'], errors='coerce')  # Ensure the Date column is in datetime format
-fig_csv.add_trace(go.Scatter(x=csv_data['Date'], y=csv_data['Open'], mode='lines', name='Open', line=dict(color='#FFFFFF')))
-fig_csv.update_layout(title='Nifty 100 ESG - Date vs Open',
-                      xaxis_title='Date',
-                      yaxis_title='Open Price',
-                      plot_bgcolor='#2d2e81',  # Set background color to the same color
-                      template='plotly_dark',
-                      xaxis=dict(
-                          tickmode='linear',
-                          dtick='M12',
-                          tickformat='%Y'
-                      ))
-st.plotly_chart(fig_csv, use_container_width=True)
-
 # Load and display heatmap data from HEATMAP - Sheet1.csv
 heatmap_data = pd.read_csv("HEATMAP - Sheet1.csv")
 heatmap_data.set_index('Company Name', inplace=True)
 heatmap_data = heatmap_data[['Weightage (%)']].astype(float)
 st.header("TOP 10 Companies in NIFTY 100 ESG")
 generate_heatmap(heatmap_data)
+
+# Load prediction data
+hdfc_data = load_csv_data("HDFC_Bank_stock_data.csv")
+wipro_data = load_csv_data("Wipro_stock_data.csv")
+infosys_data = load_csv_data("Infosys_stock_data.csv")
+larsen_data = load_csv_data("Larsen_&_Toubro_stock_data.csv")
+reliance_data = load_csv_data("Reliance_Industries_stock_data.csv")
+tcs_data = load_csv_data("Tata_Consultancy_Services_stock_data.csv")
+
+# Display prediction graph
+st.write("### Prediction Graph")
+
+fig_pred = go.Figure()
+
+datasets = {
+    "HDFC Bank": hdfc_data,
+    "Wipro": wipro_data,
+    "Infosys": infosys_data,
+    "Larsen & Toubro": larsen_data,
+    "Reliance Industries": reliance_data,
+    "Tata Consultancy Services": tcs_data
+}
+
+for company, data in datasets.items():
+    data['Date'] = pd.to_datetime(data['Date'], errors='coerce')
+    fig_pred.add_trace(go.Scatter(x=data['Date'], y=data['Open'], mode='lines', name=f'{company} Open', line=dict(color='#FFFFFF')))
+    fig_pred.add_trace(go.Scatter(x=data['Date'], y=data['Predicted Opening Price'], mode='lines', name=f'{company} Predicted Opening Price', line=dict(color='#FF5733')))
+
+fig_pred.update_layout(title='Prediction Graph - Open vs Predicted Opening Price',
+                       xaxis_title='Date',
+                       yaxis_title='Price',
+                       plot_bgcolor='#2d2e81',  # Set background color to the same color
+                       template='plotly_dark',
+                       xaxis=dict(
+                           tickmode='linear',
+                           dtick='M12',
+                           tickformat='%Y'
+                       ))
+st.plotly_chart(fig_pred, use_container_width=True)
