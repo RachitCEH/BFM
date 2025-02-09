@@ -10,7 +10,7 @@ background: url("https://raw.githubusercontent.com/RachitCEH/BFM/main/abstract-f
 background-size: cover;
 }
 [data-testid="stMarkdownContainer"] {
-background-color: skyblue;  # Sky blue background color
+background-color: #044481;  # Background color
 color: white;  # White font color
 padding: 20px;  # Padding inside the text box
 margin: 20px;  # Margin around the text box
