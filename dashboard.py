@@ -32,12 +32,6 @@ st.title("NIFTY 100 ESG DASHBOARD")
 # List of companies
 companies = ["HDFC Bank", "Infosys", "Larsen & Toubro", "Tata Consultancy Services", "Reliance Industries", "Wipro"]
 
-# Create a dropdown for company selection
-selected_company = st.selectbox('Select a Company', companies)
-
-# Display the selected company name on the dashboard
-st.write(f"Selected Company: {selected_company}")
-
 # Load the CSV file from the repository
 url = 'https://raw.githubusercontent.com/RachitCEH/BFM/main/nifty_100_esg_data.csv'
 data = pd.read_csv(url)
@@ -79,3 +73,9 @@ with col2:
     
     By integrating ESG criteria, the index promotes sustainable and responsible investment practices.
     """)
+
+# Create a dropdown for company selection below the line chart section
+selected_company = st.selectbox('Select a Company', companies)
+
+# Display the selected company name on the dashboard
+st.write(f"Selected Company: {selected_company}")
