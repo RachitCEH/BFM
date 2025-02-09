@@ -222,12 +222,12 @@ datasets = {
 }
 
 colors = {
-    "HDFC Bank": "#FF5733",
-    "Wipro": "#33FF57",
-    "Infosys": "#3357FF",
-    "Larsen & Toubro": "#FF33A1",
-    "Reliance Industries": "#33FFF5",
-    "Tata Consultancy Services": "#FF33FF"
+    "HDFC Bank": "#0000FF",
+    "Wipro": "#FFA500",
+    "Infosys": "#008000",
+    "Larsen & Toubro": "#FFFF00",
+    "Reliance Industries": "#00008B",
+    "Tata Consultancy Services": "#E1D9D1"
 }
 
 prediction_color = "#FF0000"  # Set prediction line color to red
