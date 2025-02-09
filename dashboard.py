@@ -152,13 +152,9 @@ st.write(f"**PE Ratio:** {pe_ratio}")
 st.write(f"**IPO Price:** {ipo_price if ipo_price else 'N/A'}")
 
 # Fetch and display historical data for Nifty 100 ESG
-st.header("Nifty 100 ESG Historical Data (Last 5 Years)")
-historical_data = get_historical_data()
-st.line_chart(historical_data['Close'])
-
 # Load CSV data and display it
 csv_data = load_csv_data("nifty_100_esg_data.csv")
-st.header("Nifty 100 ESG Data from CSV")
+st.header("Nifty 100 ESG Historical Data (Last 5 Years)")
 
 # Create two columns for the CSV data and the graph
 col_csv, col_graph = st.columns(2)
