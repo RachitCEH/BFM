@@ -2,7 +2,9 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 import yfinance as yf
+import requests
 from datetime import datetime
+import time
 
 # Set custom background image for the dashboard
 page_bg_img = '''
@@ -121,3 +123,55 @@ company_descriptions = {
 with col2:
     st.write("### ABOUT COMPANY")
     st.write(company_descriptions[selected_company])
+
+# New Features
+
+# Live News Ticker
+st.header("Live Market Updates")
+news_api_key = "ZRF0P3GRP8P9078H"
+response = requests.get(f"https://newsapi.org/v2/everything?q=NIFTY%20100%20ESG&apiKey={news_api_key}")
+news_data = response.json()
+news_headlines = "\n".join([f"{article['publishedAt']} - {article['title']}" for article in news_data['articles']])
+st.text(news_headlines)
+
+# Real-Time Stock Price Table
+st.header("Real-Time Stock Price Table")
+def fetch_live_data():
+    nifty_esg = yf.Ticker("^NSEI")  # Replace with the correct ticker if available
+    data = nifty_esg.history(period="1d", interval="1m")
+    return data
+
+# Display live data
+live_data = fetch_live_data()
+st.write(live_data)
+
+# Sector-Wise Performance Heatmap
+st.header("Sector-Wise Performance Heatmap")
+sector_data = pd.DataFrame({ # Example data, replace with actual sector data
+    "Sector": ["Tech", "Finance", "Healthcare", "Energy", "Consumer"],
+    "Performance": [1.5, -0.5, 2.0, -1.0, 0.5]
+})
+heatmap = go.Figure(data=go.Heatmap(z=sector_data["Performance"], x=sector_data["Sector"], colorscale='Viridis'))
+st.plotly_chart(heatmap, use_container_width=True)
+
+# Top Gainers & Losers Table
+st.header("Top Gainers & Losers")
+# Example data, replace with actual data
+data = {
+    "Stock Name": ["Stock A", "Stock B", "Stock C", "Stock D"],
+    "Current Price": [100, 200, 150, 250],
+    "% Change (24h)": [5, -3, 2, -4],
+    "Volume": [1000, 1500, 1200, 1800],
+    "Market Cap": [5000, 10000, 7500, 12500]
+}
+df = pd.DataFrame(data)
+st.table(df)
+
+# Real-Time Data Refresh
+if st.button("Refresh Data"):
+    st.experimental_rerun()
+
+# Auto-refresh every 30 seconds
+st.experimental_singleton.clear()
+time.sleep(30)
+st.experimental_rerun()
