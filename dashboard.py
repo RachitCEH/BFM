@@ -40,7 +40,7 @@ data = pd.read_csv(url)
 data['Date'] = pd.to_datetime(data['Date'], format='%d/%m/%Y')
 
 # Assuming the dominant color from the new image is a shade of blue
-dominant_color = '#2d2e81'  # Example dominant color (blue)
+dominant_color = '#FFFFFF'  # White color
 
 # Create a line chart
 fig = go.Figure()
