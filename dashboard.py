@@ -84,7 +84,7 @@ def generate_heatmap(data):
 
 # Load CSV data and display it
 csv_data = load_csv_data("nifty_100_esg_data.csv")
-st.header("Nifty 100 ESG Data from CSV")
+st.header("Historical Data Of NIFTY 100 ESG Index")
 
 # Display CSV data
 st.dataframe(csv_data, use_container_width=True)
