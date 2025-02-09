@@ -30,7 +30,7 @@ data = pd.read_csv(url)
 data['Date'] = pd.to_datetime(data['Date'], format='%d/%m/%Y')
 
 # Assuming the dominant color from the new image is a shade of blue
-dominant_color = '#001f3f'  # Example dominant color (dark blue)
+dominant_color = '#0000FF'  # Example dominant color (blue)
 
 # Create a line chart
 fig = go.Figure()
@@ -41,7 +41,7 @@ fig.add_trace(go.Scatter(x=data['Date'], y=data['Open'], mode='lines', name='Ope
 fig.update_layout(title='NIFTY 100 NSE - OPEN PRICE TREND',
                   xaxis_title='Date',
                   yaxis_title='Open Price',
-                  plot_bgcolor='rgba(0, 31, 63, 0.5)',  # Matching background color with some transparency
+                  plot_bgcolor='white',  # Set background color to white
                   template='plotly_dark')
 
 # Create two equal-sized columns for the chart and the description
