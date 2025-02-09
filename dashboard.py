@@ -9,6 +9,11 @@ page_bg_img = '''
 background: url("https://raw.githubusercontent.com/RachitCEH/BFM/main/abstract-futuristic-technology-blank-wallpaper-free-vector.jpg");
 background-size: cover;
 }
+[data-testid="stMarkdownContainer"] {
+background-color: rgba(255, 255, 255, 0.8);  # White background with some transparency
+padding: 20px;
+border-radius: 15px;
+}
 </style>
 '''
 st.markdown(page_bg_img, unsafe_allow_html=True)
@@ -60,4 +65,6 @@ with col2:
     The index includes companies that are leaders in ESG practices while also considering their financial performance. 
     It aims to provide investors with an ESG-compliant benchmark that represents the top 100 companies in India. 
     This allows investors to make more informed decisions.
+    
+    By integrating ESG criteria, the index promotes sustainable and responsible investment practices.
     """)
