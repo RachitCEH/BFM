@@ -50,12 +50,6 @@ def get_financial_data(ticker):
     ipo_price = None  # Replace with actual IPO price if available
     return eps, pe_ratio, ipo_price
 
-# Function to get historical data for Nifty 100 ESG for the last 5 years
-def get_historical_data():
-    symbol = "^NSE100ESG"
-    stock = yf.Ticker(symbol)
-    return stock.history(period="5y")
-
 # Create a dropdown for company selection below the line chart section
 selected_company = st.selectbox('Select a Company', companies)
 
@@ -145,8 +139,3 @@ st.write(f"### Financial Data for {selected_company}")
 st.write(f"**EPS:** {eps}")
 st.write(f"**PE Ratio:** {pe_ratio}")
 st.write(f"**IPO Price:** {ipo_price if ipo_price else 'N/A'}")
-
-# Fetch and display historical data for Nifty 100 ESG
-st.header("Nifty 100 ESG Historical Data (Last 5 Years)")
-historical_data = get_historical_data()
-st.line_chart(historical_data['Close'])
