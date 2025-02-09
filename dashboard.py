@@ -82,29 +82,7 @@ def generate_heatmap(data):
     plt.title("TOP 10 Companies in NIFTY 100 ESG")
     st.pyplot(plt)
 
-# Load CSV data and display it
-csv_data = load_csv_data("nifty_100_esg_data.csv")
-st.header("Historical Data Of NIFTY 100 ESG Index")
 
-# Display CSV data
-st.dataframe(csv_data, use_container_width=True)
-
-# Display line graph using Date vs Open columns from the csv file
-st.write("### Nifty 100 ESG Historical Data")
-fig_csv = go.Figure()
-csv_data['Date'] = pd.to_datetime(csv_data['Date'], errors='coerce')  # Ensure the Date column is in datetime format
-fig_csv.add_trace(go.Scatter(x=csv_data['Date'], y=csv_data['Open'], mode='lines', name='Open', line=dict(color='#FFFFFF')))
-fig_csv.update_layout(title='Nifty 100 ESG - Date vs Open',
-                      xaxis_title='Date',
-                      yaxis_title='Open Price',
-                      plot_bgcolor='#2d2e81',  # Set background color to the same color
-                      template='plotly_dark',
-                      xaxis=dict(
-                          tickmode='linear',
-                          dtick='M12',
-                          tickformat='%Y'
-                      ))
-st.plotly_chart(fig_csv, use_container_width=True)
 
 # Fetch live data for Nifty 100 ESG
 nifty100_esg_data = fetch_live_data("^NSE100ESG")
@@ -198,6 +176,30 @@ st.write(f"### Financial Data for {selected_company}")
 st.write(f"**EPS:** {eps}")
 st.write(f"**PE Ratio:** {pe_ratio}")
 st.write(f"**IPO Price:** {ipo_price if ipo_price else 'N/A'}")
+
+# Load CSV data and display it
+csv_data = load_csv_data("nifty_100_esg_data.csv")
+st.header("Historical Data Of NIFTY 100 ESG Index")
+
+# Display CSV data
+st.dataframe(csv_data, use_container_width=True)
+
+# Display line graph using Date vs Open columns from the csv file
+st.write("### Nifty 100 ESG Trend")
+fig_csv = go.Figure()
+csv_data['Date'] = pd.to_datetime(csv_data['Date'], errors='coerce')  # Ensure the Date column is in datetime format
+fig_csv.add_trace(go.Scatter(x=csv_data['Date'], y=csv_data['Open'], mode='lines', name='Open', line=dict(color='#FFFFFF')))
+fig_csv.update_layout(title='Nifty 100 ESG - Date vs Open',
+                      xaxis_title='Date',
+                      yaxis_title='Open Price',
+                      plot_bgcolor='#2d2e81',  # Set background color to the same color
+                      template='plotly_dark',
+                      xaxis=dict(
+                          tickmode='linear',
+                          dtick='M12',
+                          tickformat='%Y'
+                      ))
+st.plotly_chart(fig_csv, use_container_width=True)
 
 # Load and display heatmap data from HEATMAP - Sheet1.csv
 heatmap_data = pd.read_csv("HEATMAP - Sheet1.csv")
