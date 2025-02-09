@@ -71,7 +71,7 @@ def load_csv_data(file_path):
 # Function to load heatmap data
 @st.cache_data
 def load_heatmap_data(file_path):
-    return pd.read_csv(file_path)
+    return pd.read_csv(file_path, encoding='ISO-8859-1')
 
 # Function to generate heatmap
 def generate_heatmap(data):
