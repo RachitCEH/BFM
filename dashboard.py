@@ -201,10 +201,6 @@ st.plotly_chart(fig_csv, use_container_width=True)
 # Fetch live data for Nifty 100 ESG
 nifty100_esg_data = fetch_live_data("^NSE100ESG")
 
-# Display live data
-st.header("Nifty 100 ESG Live Data")
-st.line_chart(nifty100_esg_data['Close'])
-
 # Function to generate heatmap
 def generate_heatmap(data):
     plt.figure(figsize=(10, 8))
