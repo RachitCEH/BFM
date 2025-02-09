@@ -40,16 +40,11 @@ def get_stock_data(ticker, period='1y'):
     stock = yf.Ticker(ticker)
     return stock.history(period=period)
 
-# Function to get support levels
-def get_support_levels(df):
-    levels = []
-    for i in range(2, len(df) - 2):
-        if df['Low'][i] < df['Low'][i - 1] and df['Low'][i] < df['Low'][i + 1] and df['Low'][i + 1] < df['Low'][i + 2] and df['Low'][i - 1] < df['Low'][i - 2]:
-            levels.append((i, df['Low'][i]))
-    return levels
-
 # Create a dropdown for company selection below the line chart section
 selected_company = st.selectbox('Select a Company', companies)
+
+# Display the selected company name on the dashboard
+st.write(f"Selected Company: {selected_company}")
 
 # User input for timeframe
 timeframe = st.selectbox('Select Timeframe', ['1mo', '3mo', '6mo', '1y', '2y', '5y'])
@@ -65,18 +60,11 @@ ticker_map = {
 }
 data = get_stock_data(ticker_map[selected_company], period=timeframe)
 
-# Get support levels
-support_levels = get_support_levels(data)
-
 # Create a line chart
 fig = go.Figure()
 
 # Add the main line for stock prices
 fig.add_trace(go.Scatter(x=data.index, y=data['Close'], mode='lines', name='Close', line=dict(color='#FFFFFF')))
-
-# Add support levels to the chart
-for level in support_levels:
-    fig.add_shape(type='line', x0=data.index[level[0]], y0=level[1], x1=data.index[level[0] + 1], y1=level[1], line=dict(color='Red',))
 
 # Update layout of the chart
 fig.update_layout(title=f'{selected_company} - Stock Price Trend',
@@ -93,17 +81,17 @@ with col1:
     st.write(f"### {selected_company} - Stock Price Trend")
     st.plotly_chart(fig, use_container_width=True)
 
-# Display the NIFTY 100 ESG description in the second column
-with col2:
-    st.write("### NIFTY 100 ESG")
-    st.write("""
-    The NIFTY 100 ESG Index is designed to reflect the performance of companies within the NIFTY 100 index that meet certain environmental, social, and governance (ESG) criteria. 
-    The index includes companies that are leaders in ESG practices while also considering their financial performance. 
-    It aims to provide investors with an ESG-compliant benchmark that represents the top 100 companies in India. 
-    This allows investors to make more informed decisions.
-    
-    By integrating ESG criteria, the index promotes sustainable and responsible investment practices.
-    """)
+# Company descriptions
+company_descriptions = {
+    "HDFC Bank": "HDFC Bank is one of India's leading private sector banks, providing a wide range of financial services.",
+    "Infosys": "Infosys is a global leader in technology services and consulting, enabling clients in more than 50 countries.",
+    "Larsen & Toubro": "Larsen & Toubro is an Indian multinational engaged in technology, engineering, construction, manufacturing, and financial services.",
+    "Tata Consultancy Services": "Tata Consultancy Services is a global leader in IT services, consulting, and business solutions.",
+    "Reliance Industries": "Reliance Industries is a conglomerate holding company headquartered in Mumbai, India, engaged in diverse businesses.",
+    "Wipro": "Wipro is a leading global information technology, consulting, and business process services company."
+}
 
-# Display the selected company name on the dashboard
-st.write(f"Selected Company: {selected_company}")
+# Display the dynamic description in the second column
+with col2:
+    st.write("### ABOUT COMPANY")
+    st.write(company_descriptions[selected_company])
