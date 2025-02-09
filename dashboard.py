@@ -40,17 +40,18 @@ fig.update_layout(title='NIFTY 100 NSE - OPEN PRICE TREND',
                   plot_bgcolor='white',
                   template='plotly_dark')
 
-# Divide the page into two equal-sized columns
-col1, col2 = st.columns(2)
+# Create two equal-sized columns for the chart and the description
+col1, col2 = st.columns([2, 1])
 
 # Display the chart in the first column
 with col1:
-    st.plotly_chart(fig)
+    st.write("### NIFTY 100 NSE - OPEN PRICE TREND")
+    st.plotly_chart(fig, use_container_width=True)
 
 # Display the NIFTY 100 ESG description in the second column
 with col2:
+    st.write("### NIFTY 100 ESG")
     st.write("""
-    ### NIFTY 100 ESG
     The NIFTY 100 ESG Index is designed to reflect the performance of companies within the NIFTY 100 index that meet certain environmental, social, and governance (ESG) criteria. 
     The index includes companies that are leaders in ESG practices while also considering their financial performance. 
     It aims to provide investors with an ESG-compliant benchmark that represents the top 100 companies in India.
