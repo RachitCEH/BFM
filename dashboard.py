@@ -8,8 +8,6 @@ st.set_page_config(layout="wide", page_title="NIFTY 100 ESG Dashboard", page_ico
 
 # Header
 st.title('NIFTY 100 ESG Stock Market Dashboard :chart_with_upwards_trend:')
-
-# Sidebar for navigation
 st.sidebar.title("Navigation")
 sections = ["NIFTY Energy Index Overview", "Historical Stock Data Table", "Live News Section", "NIFTY Energy Performance Table", "Opening Price Prediction", "Company Weightage in NSE Heatmap", "Buying & Selling Decision"]
 selected_section = st.sidebar.radio("Go to", sections)
@@ -87,5 +85,5 @@ elif selected_section == "Buying & Selling Decision":
     st.plotly_chart(fig)
 
 # Footer
-st.sidebar.write("Last Update: 2025-02-09 12:40:21")
+st.sidebar.write("Last Update: 2025-02-09 12:44:51")
 st.sidebar.write("Data Source: NIFTY 100 ESG Data CSV")
