@@ -10,11 +10,11 @@ background: url("https://raw.githubusercontent.com/RachitCEH/BFM/main/abstract-f
 background-size: cover;
 }
 [data-testid="stMarkdownContainer"] {
-background-color: black;  # Black background color
+background-color: skyblue;  # Sky blue background color
 color: white;  # White font color
 padding: 20px;  # Padding inside the text box
 margin: 20px;  # Margin around the text box
-border-radius: 0px;  # Rectangle shape
+border-radius: 10px;  # Rounded corners
 }
 [data-testid="stVerticalBlock"] > div {
 margin: 20px 0;  # Add margin to the text elements
