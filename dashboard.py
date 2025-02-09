@@ -24,8 +24,8 @@ border-radius: 10px;  # Rounded corners
 [data-testid="stVerticalBlock"] > div {
 margin: 10px 0;  # Reduced margin to decrease gaps between elements
 }
-h1, h3 {
-text-align: center;  # Center align the header and subheaders
+h1, h2, h3, h4, h5, h6 {
+text-align: center;  # Center align all headers
 }
 </style>
 '''
@@ -198,8 +198,6 @@ st.write(f"### Financial Data for {selected_company}")
 st.write(f"**EPS:** {eps}")
 st.write(f"**PE Ratio:** {pe_ratio}")
 st.write(f"**IPO Price:** {ipo_price if ipo_price else 'N/A'}")
-
-
 
 # Load prediction data
 hdfc_data = load_csv_data("HDFC_Bank_stock_data.csv")
