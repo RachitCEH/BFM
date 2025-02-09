@@ -77,6 +77,7 @@ def load_heatmap_data(file_path):
 def generate_heatmap(data):
     plt.figure(figsize=(10, 8))
     heatmap = sns.heatmap(data, annot=True, cmap='coolwarm', cbar=True, square=True, linewidths=.5)
+    heatmap.set_facecolor('#2d2e81')  # Set the face color to black
     plt.title("TOP 10 Companies in NIFTY 100 ESG")
     st.pyplot(plt)
 
@@ -130,7 +131,7 @@ company_descriptions = {
                  "The bank is known for its strong emphasis on customer service, innovative products, and extensive branch network.",
 
     "Infosys": "Infosys is a global leader in technology services and consulting, enabling clients in more than 50 countries. "
-               "Founded in 1981, Infosys has become a pioneer in the IT services industry, offering a wide range of services including application development, cloud computing, data analytics, and more. "
+               "Founded in 1981, Infosys has become a pioneer in the IT services industry, offering a wide range of services including application development, cloud computing, data analytics, and mor[...]
                "The company is renowned for its commitment to innovation, sustainability, and corporate social responsibility. "
                "With a strong focus on employee development and cutting-edge technology, Infosys continues to drive growth and deliver exceptional value to its clients.",
 
