@@ -2,6 +2,16 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 
+# Set custom background color for the dashboard
+page_bg_img = '''
+<style>
+body {
+background: linear-gradient(to right, #1e3c72, #2a5298);
+}
+</style>
+'''
+st.markdown(page_bg_img, unsafe_allow_html=True)
+
 # List of companies
 companies = ["HDFC Bank", "Infosys", "Larsen & Toubro", "Tata Consultancy Services", "Reliance Industries", "Wipro"]
 
@@ -21,12 +31,13 @@ data['Date'] = pd.to_datetime(data['Date'], format='%d/%m/%Y')
 # Create a line chart
 fig = go.Figure()
 
-fig.add_trace(go.Scatter(x=data['Date'], y=data['Open'], mode='lines', name='Open'))
+fig.add_trace(go.Scatter(x=data['Date'], y=data['Open'], mode='lines', name='Open', line=dict(color='green')))
 
 # Update layout of the chart
-fig.update_layout(title='Open Prices vs Date',
+fig.update_layout(title='NIFTY 100 NSE - OPEN PRICE TREND',
                   xaxis_title='Date',
                   yaxis_title='Open Price',
+                  plot_bgcolor='white',
                   template='plotly_dark')
 
 # Divide the page into two equal-sized columns
