@@ -134,16 +134,31 @@ news_data = response.json()
 news_headlines = "\n".join([f"{article['publishedAt']} - {article['title']}" for article in news_data['articles']])
 st.text(news_headlines)
 
-# Real-Time Stock Price Table
+# Real-Time Stock Price Table using Alpha Vantage API
 st.header("Real-Time Stock Price Table")
-def fetch_live_data():
-    nifty_esg = yf.Ticker("^NSEI")  # Replace with the correct ticker if available
-    data = nifty_esg.history(period="1d", interval="1m")
-    return data
 
-# Display live data
-live_data = fetch_live_data()
-st.write(live_data)
+# Function to fetch live data from Alpha Vantage
+def fetch_alpha_vantage_data():
+    API_KEY = "ZRF0P3GRP8P9078H"  # Replace with your Alpha Vantage API key
+    symbol = "NSE:NIFTY100ESG"
+    url = f"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={symbol}&interval=5min&apikey={API_KEY}"
+    response = requests.get(url)
+    data = response.json()
+    if "Time Series (5min)" in data:
+        df = pd.DataFrame.from_dict(data["Time Series (5min)"], orient="index")
+        df.columns = ["Open", "High", "Low", "Close", "Volume"]
+        df.index = pd.to_datetime(df.index)
+        df = df.astype(float)
+        return df
+    else:
+        return None
+
+# Display live data from Alpha Vantage
+alpha_vantage_data = fetch_alpha_vantage_data()
+if alpha_vantage_data is not None:
+    st.write(alpha_vantage_data.head())
+else:
+    st.write("Error fetching data from Alpha Vantage")
 
 # Sector-Wise Performance Heatmap
 st.header("Sector-Wise Performance Heatmap")
