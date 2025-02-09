@@ -131,15 +131,20 @@ st.header("Live Market Updates")
 news_api_key = "ZRF0P3GRP8P9078H"
 response = requests.get(f"https://newsapi.org/v2/everything?q=NIFTY%20100%20ESG&apiKey={news_api_key}")
 news_data = response.json()
-news_headlines = "\n".join([f"{article['publishedAt']} - {article['title']}" for article in news_data['articles']])
-st.text(news_headlines)
+
+# Check if the articles key exists in the response
+if 'articles' in news_data:
+    news_headlines = "\n".join([f"{article['publishedAt']} - {article['title']}" for article in news_data['articles']])
+    st.text(news_headlines)
+else:
+    st.text("No news articles found or error in fetching data.")
 
 # Real-Time Stock Price Table using Alpha Vantage API
 st.header("Real-Time Stock Price Table")
 
 # Function to fetch live data from Alpha Vantage
 def fetch_alpha_vantage_data():
-    API_KEY = "ZRF0P3GRP8P9078H"  # Replace with your Alpha Vantage API key
+    API_KEY = "your_api_key_here"  # Replace with your Alpha Vantage API key
     symbol = "NSE:NIFTY100ESG"
     url = f"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={symbol}&interval=5min&apikey={API_KEY}"
     response = requests.get(url)
