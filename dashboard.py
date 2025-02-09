@@ -2,11 +2,12 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 
-# Set custom background color for the dashboard
+# Set custom background image for the dashboard
 page_bg_img = '''
 <style>
 body {
-background: linear-gradient(to right, #1e3c72, #2a5298);
+background: url("https://raw.githubusercontent.com/RachitCEH/BFM/main/29d612.webp");
+background-size: cover;
 }
 </style>
 '''
