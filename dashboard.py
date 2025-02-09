@@ -199,12 +199,7 @@ st.write(f"**EPS:** {eps}")
 st.write(f"**PE Ratio:** {pe_ratio}")
 st.write(f"**IPO Price:** {ipo_price if ipo_price else 'N/A'}")
 
-# Load and display heatmap data from HEATMAP - Sheet1.csv
-heatmap_data = pd.read_csv("HEATMAP - Sheet1.csv")
-heatmap_data.set_index('Company Name', inplace=True)
-heatmap_data = heatmap_data[['Weightage (%)']].astype(float)
-st.header("TOP 10 Companies in NIFTY 100 ESG")
-generate_heatmap(heatmap_data)
+
 
 # Load prediction data
 hdfc_data = load_csv_data("HDFC_Bank_stock_data.csv")
@@ -244,3 +239,10 @@ fig_pred.update_layout(title='Prediction Graph - Open vs Predicted Opening Price
                            tickformat='%Y'
                        ))
 st.plotly_chart(fig_pred, use_container_width=True)
+
+# Load and display heatmap data from HEATMAP - Sheet1.csv
+heatmap_data = pd.read_csv("HEATMAP - Sheet1.csv")
+heatmap_data.set_index('Company Name', inplace=True)
+heatmap_data = heatmap_data[['Weightage (%)']].astype(float)
+st.header("TOP 10 Companies in NIFTY 100 ESG")
+generate_heatmap(heatmap_data)
