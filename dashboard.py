@@ -167,13 +167,20 @@ with col_csv:
     st.dataframe(csv_data)
 
 # Display line graph using Date vs Open columns from the csv file
+# Display line graph using Date vs Open columns from the csv file
 with col_graph:
     st.write("### Nifty 100 ESG Historical Data")
     fig_csv = go.Figure()
-    fig_csv.add_trace(go.Scatter(x=csv_data['Date'],y=csv_data['Open'], mode='lines', name='Open', line=dict(color='#FFFFFF')))
+    csv_data['Date'] = pd.to_datetime(csv_data['Date'])  # Ensure the Date column is in datetime format
+    fig_csv.add_trace(go.Scatter(x=csv_data['Date'], y=csv_data['Open'], mode='lines', name='Open', line=dict(color='#FFFFFF')))
     fig_csv.update_layout(title='Nifty 100 ESG - Date vs Open',
                           xaxis_title='Date',
                           yaxis_title='Open Price',
                           plot_bgcolor='#2d2e81',  # Set background color to the same color
-                          template='plotly_dark')
+                          template='plotly_dark',
+                          xaxis=dict(
+                              tickmode='array',
+                              tickvals=csv_data['Date'][csv_data['Date'].dt.year % 1 == 0],
+                              ticktext=csv_data['Date'][csv_data['Date'].dt.year % 1 == 0].dt.strftime('%Y')
+                          ))
     st.plotly_chart(fig_csv, use_container_width=True)
