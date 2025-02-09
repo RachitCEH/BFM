@@ -19,8 +19,8 @@ border-radius: 0px;  # Rectangle shape
 [data-testid="stVerticalBlock"] > div {
 margin: 20px 0;  # Add margin to the text elements
 }
-h1 {
-text-align: center;  # Center align the header
+h1, h3 {
+text-align: center;  # Center align the header and subheaders
 }
 </style>
 '''
