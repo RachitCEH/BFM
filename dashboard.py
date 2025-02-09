@@ -23,6 +23,9 @@ margin: 20px 0;  # Add margin to the text elements
 '''
 st.markdown(page_bg_img, unsafe_allow_html=True)
 
+# Add the header for the entire dashboard
+st.title("NIFTY 100 ESG DASHBOARD")
+
 # List of companies
 companies = ["HDFC Bank", "Infosys", "Larsen & Toubro", "Tata Consultancy Services", "Reliance Industries", "Wipro"]
 
