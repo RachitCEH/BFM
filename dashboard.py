@@ -41,6 +41,11 @@ def get_stock_data(ticker, period='1y'):
     stock = yf.Ticker(ticker)
     return stock.history(period=period)
 
+# Function to fetch live data
+def fetch_live_data(symbol):
+    stock = yf.Ticker(symbol)
+    return stock.history(period="1d", interval="1m")  # Fetch live data with 1-minute interval
+
 # Function to get financial data (EPS, PE ratio, IPO price)
 def get_financial_data(ticker):
     stock = yf.Ticker(ticker)
@@ -59,7 +64,7 @@ def get_historical_data():
 # Function to read CSV file
 @st.cache_data
 def load_csv_data(file_path):
-    return pd.read_csv(file_path, parse_dates=['Date'], dayfirst=True)
+    return pd.read_csv(file_path)
 
 # Create a dropdown for company selection below the line chart section
 selected_company = st.selectbox('Select a Company', companies)
@@ -155,6 +160,13 @@ st.write(f"**IPO Price:** {ipo_price if ipo_price else 'N/A'}")
 st.header("Nifty 100 ESG Historical Data (Last 5 Years)")
 historical_data = get_historical_data()
 st.line_chart(historical_data['Close'])
+
+# Fetch live data for Nifty 100 ESG
+nifty100_esg_data = fetch_live_data("^NSE100ESG")
+
+# Display live data
+st.header("Nifty 100 ESG Live Data")
+st.line_chart(nifty100_esg_data['Close'])
 
 # Load CSV data and display it
 csv_data = load_csv_data("nifty_100_esg_data.csv")
