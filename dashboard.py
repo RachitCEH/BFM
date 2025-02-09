@@ -170,16 +170,10 @@ with col_csv:
 with col_graph:
     st.write("### Nifty 100 ESG Historical Data")
     fig_csv = go.Figure()
-    csv_data['Date'] = pd.to_datetime(csv_data['Date'])  # Ensure the Date column is in datetime format
-    fig_csv.add_trace(go.Scatter(x=csv_data['Date'], y=csv_data['Open'], mode='lines', name='Open', line=dict(color='#FFFFFF')))
+    fig_csv.add_trace(go.Scatter(x=csv_data['Date'],y=csv_data['Open'], mode='lines', name='Open', line=dict(color='#FFFFFF')))
     fig_csv.update_layout(title='Nifty 100 ESG - Date vs Open',
                           xaxis_title='Date',
                           yaxis_title='Open Price',
                           plot_bgcolor='#2d2e81',  # Set background color to the same color
-                          template='plotly_dark',
-                          xaxis=dict(
-                              tickmode='linear',
-                              dtick='M12',
-                              tickformat='%Y'
-                          ))
+                          template='plotly_dark')
     st.plotly_chart(fig_csv, use_container_width=True)
