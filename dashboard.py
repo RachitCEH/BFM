@@ -34,6 +34,9 @@ st.title("NIFTY 100 ESG DASHBOARD")
 # Load NIFTY 100 ESG data from CSV
 nifty_100_esg_data = pd.read_csv('nifty_100_esg_data.csv', parse_dates=['Date'])
 
+# Ensure the 'Date' column is parsed as datetime
+nifty_100_esg_data['Date'] = pd.to_datetime(nifty_100_esg_data['Date'])
+
 # Create a year column for grouping
 nifty_100_esg_data['Year'] = nifty_100_esg_data['Date'].dt.year
 
