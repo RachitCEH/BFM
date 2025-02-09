@@ -221,19 +221,12 @@ datasets = {
     "Tata Consultancy Services": tcs_data
 }
 
-colors = {
-    "HDFC Bank": "#FF5733",
-    "Wipro": "#33FF57",
-    "Infosys": "#3357FF",
-    "Larsen & Toubro": "#FF33A1",
-    "Reliance Industries": "#33FFF5",
-    "Tata Consultancy Services": "#FF33FF"
-}
+prediction_color = "#FF33FF"  # Set your desired color here
 
 for company, data in datasets.items():
     data['Date'] = pd.to_datetime(data['Date'], errors='coerce')
-    fig_pred.add_trace(go.Scatter(x=data['Date'], y=data['Open'], mode='lines', name=f'{company} Open', line=dict(color=colors[company])))
-    fig_pred.add_trace(go.Scatter(x=data['Date'], y=data['Predicted Opening Price'], mode='lines', name=f'{company} Predicted Opening Price', line=dict(color=colors[company])))
+    fig_pred.add_trace(go.Scatter(x=data['Date'], y=data['Open'], mode='lines', name=f'{company} Open', line=dict(color=prediction_color)))
+    fig_pred.add_trace(go.Scatter(x=data['Date'], y=data['Predicted Opening Price'], mode='lines', name=f'{company} Predicted Opening Price', line=dict(color=prediction_color)))
 
 fig_pred.update_layout(title='Prediction Graph - Open vs Predicted Opening Price',
                        xaxis_title='Date',
