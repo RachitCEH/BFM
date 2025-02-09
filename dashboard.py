@@ -130,10 +130,11 @@ company_descriptions = {
                  "HDFC Bank offers a comprehensive suite of banking and financial services, including retail banking, wholesale banking, and treasury operations. "
                  "The bank is known for its strong emphasis on customer service, innovative products, and extensive branch network.",
 
-    "Infosys": "Infosys is a global leader in technology services and consulting, enabling clients in more than 50 countries. "
-               "Founded in 1981, Infosys has become a pioneer in the IT services industry, offering a wide range of services including application development, cloud computing, data analytics, and mor[...]
+   "Infosys": "Infosys is a global leader in technology services and consulting, enabling clients in more than 50 countries. "
+               "Founded in 1981, Infosys has become a pioneer in the IT services industry, offering a wide range of services including application development, cloud computing, data analytics, and more. "
                "The company is renowned for its commitment to innovation, sustainability, and corporate social responsibility. "
                "With a strong focus on employee development and cutting-edge technology, Infosys continues to drive growth and deliver exceptional value to its clients.",
+
 
     "Larsen & Toubro": "Larsen & Toubro is an Indian multinational engaged in technology, engineering, construction, manufacturing, and financial services. "
                        "Established in 1938, L&T has grown into a conglomerate with a presence in over 30 countries. "
