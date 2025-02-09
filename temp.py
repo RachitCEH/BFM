@@ -4,6 +4,8 @@ import plotly.graph_objects as go
 import yfinance as yf
 import requests
 from datetime import datetime
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 # Set custom background image for the dashboard
 page_bg_img = '''
@@ -41,6 +43,11 @@ def get_stock_data(ticker, period='1y'):
     stock = yf.Ticker(ticker)
     return stock.history(period=period)
 
+# Function to fetch live data
+def fetch_live_data(symbol):
+    stock = yf.Ticker(symbol)
+    return stock.history(period="1d", interval="1m")  # Fetch live data with 1-minute interval
+
 # Function to get financial data (EPS, PE ratio, IPO price)
 def get_financial_data(ticker):
     stock = yf.Ticker(ticker)
@@ -60,6 +67,25 @@ def get_historical_data():
 @st.cache_data
 def load_csv_data(file_path):
     return pd.read_csv(file_path, parse_dates=['Date'], dayfirst=True)
+
+# Function to load heatmap data
+@st.cache_data
+def load_heatmap_data(file_path):
+    return pd.read_csv(file_path, encoding='ISO-8859-1')
+
+# Function to generate heatmap
+def generate_heatmap(data):
+    plt.figure(figsize=(10, 8))
+    sns.set(style="darkgrid")  # Set Seaborn style to darkgrid
+    ax = sns.heatmap(data, annot=True, cmap='coolwarm', cbar=True, square=True, linewidths=.5)
+    ax.set_facecolor('#000000')  # Set the face color to black
+    plt.title("TOP 10 Companies in NIFTY 100 ESG")
+    st.pyplot(plt)
+
+
+
+# Fetch live data for Nifty 100 ESG
+nifty100_esg_data = fetch_live_data("^NSE100ESG")
 
 # Create a dropdown for company selection below the line chart section
 selected_company = st.selectbox('Select a Company', companies)
@@ -110,7 +136,7 @@ company_descriptions = {
                  "HDFC Bank offers a comprehensive suite of banking and financial services, including retail banking, wholesale banking, and treasury operations. "
                  "The bank is known for its strong emphasis on customer service, innovative products, and extensive branch network.",
 
-    "Infosys": "Infosys is a global leader in technology services and consulting, enabling clients in more than 50 countries. "
+   "Infosys": "Infosys is a global leader in technology services and consulting, enabling clients in more than 50 countries. "
                "Founded in 1981, Infosys has become a pioneer in the IT services industry, offering a wide range of services including application development, cloud computing, data analytics, and more. "
                "The company is renowned for its commitment to innovation, sustainability, and corporate social responsibility. "
                "With a strong focus on employee development and cutting-edge technology, Infosys continues to drive growth and deliver exceptional value to its clients.",
@@ -151,31 +177,33 @@ st.write(f"**EPS:** {eps}")
 st.write(f"**PE Ratio:** {pe_ratio}")
 st.write(f"**IPO Price:** {ipo_price if ipo_price else 'N/A'}")
 
-# Fetch and display historical data for Nifty 100 ESG
 # Load CSV data and display it
 csv_data = load_csv_data("nifty_100_esg_data.csv")
-st.header("Nifty 100 ESG Historical Data (Last 5 Years)")
+st.header("Historical Data Of NIFTY 100 ESG Index")
 
-# Create two columns for the CSV data and the graph
-col_csv, col_graph = st.columns(2)
-
-with col_csv:
-    st.dataframe(csv_data)
+# Display CSV data
+st.dataframe(csv_data, use_container_width=True)
 
 # Display line graph using Date vs Open columns from the csv file
-with col_graph:
-    st.write("### Nifty 100 ESG Historical Data")
-    fig_csv = go.Figure()
-    csv_data['Date'] = pd.to_datetime(csv_data['Date'], errors='coerce')  # Ensure the Date column is in datetime format
-    fig_csv.add_trace(go.Scatter(x=csv_data['Date'], y=csv_data['Open'], mode='lines', name='Open', line=dict(color='#FFFFFF')))
-    fig_csv.update_layout(title='Nifty 100 ESG - Date vs Open',
-                          xaxis_title='Date',
-                          yaxis_title='Open Price',
-                          plot_bgcolor='#2d2e81',  # Set background color to the same color
-                          template='plotly_dark',
-                          xaxis=dict(
-                              tickmode='linear',
-                              dtick='M12',
-                              tickformat='%Y'
-                          ))
-    st.plotly_chart(fig_csv, use_container_width=True)
+st.write("### Nifty 100 ESG Trend")
+fig_csv = go.Figure()
+csv_data['Date'] = pd.to_datetime(csv_data['Date'], errors='coerce')  # Ensure the Date column is in datetime format
+fig_csv.add_trace(go.Scatter(x=csv_data['Date'], y=csv_data['Open'], mode='lines', name='Open', line=dict(color='#FFFFFF')))
+fig_csv.update_layout(title='Nifty 100 ESG - Date vs Open',
+                      xaxis_title='Date',
+                      yaxis_title='Open Price',
+                      plot_bgcolor='#2d2e81',  # Set background color to the same color
+                      template='plotly_dark',
+                      xaxis=dict(
+                          tickmode='linear',
+                          dtick='M12',
+                          tickformat='%Y'
+                      ))
+st.plotly_chart(fig_csv, use_container_width=True)
+
+# Load and display heatmap data from HEATMAP - Sheet1.csv
+heatmap_data = pd.read_csv("HEATMAP - Sheet1.csv")
+heatmap_data.set_index('Company Name', inplace=True)
+heatmap_data = heatmap_data[['Weightage (%)']].astype(float)
+st.header("TOP 10 Companies in NIFTY 100 ESG")
+generate_heatmap(heatmap_data)
