@@ -114,7 +114,7 @@ company_descriptions = {
                "Founded in 1981, Infosys has become a pioneer in the IT services industry, offering a wide range of services including application development, cloud computing, data analytics, and more. "
                "The company is renowned for its commitment to innovation, sustainability, and corporate social responsibility. "
                "With a strong focus on employee development and cutting-edge technology, Infosys continues to drive growth and deliver exceptional value to its clients.",
-   
+
     "Larsen & Toubro": "Larsen & Toubro is an Indian multinational engaged in technology, engineering, construction, manufacturing, and financial services. "
                        "Established in 1938, L&T has grown into a conglomerate with a presence in over 30 countries. "
                        "The company is known for its expertise in executing large and complex projects across various sectors, including infrastructure, power, defense, and aerospace. "
@@ -159,4 +159,21 @@ st.line_chart(historical_data['Close'])
 # Load CSV data and display it
 csv_data = load_csv_data("nifty_100_esg_data.csv")
 st.header("Nifty 100 ESG Data from CSV")
-st.dataframe(csv_data)
+
+# Create two columns for the CSV data and the graph
+col_csv, col_graph = st.columns(2)
+
+with col_csv:
+    st.dataframe(csv_data)
+
+# Display line graph using Date vs Open columns from the csv file
+with col_graph:
+    st.write("### Nifty 100 ESG Historical Data")
+    fig_csv = go.Figure()
+    fig_csv.add_trace(go.Scatter(x=csv_data['Date'],y=csv_data['Open'], mode='lines', name='Open', line=dict(color='#FFFFFF')))
+    fig_csv.update_layout(title='Nifty 100 ESG - Date vs Open',
+                          xaxis_title='Date',
+                          yaxis_title='Open Price',
+                          plot_bgcolor='#2d2e81',  # Set background color to the same color
+                          template='plotly_dark')
+    st.plotly_chart(fig_csv, use_container_width=True)
