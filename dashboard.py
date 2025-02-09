@@ -10,7 +10,7 @@ background: url("https://raw.githubusercontent.com/RachitCEH/BFM/main/abstract-f
 background-size: cover;
 }
 [data-testid="stMarkdownContainer"] {
-background-color: #044481;  # Background color
+background-color: #2d2e81;  # Background color
 color: white;  # White font color
 padding: 20px;  # Padding inside the text box
 margin: 20px;  # Margin around the text box
@@ -40,7 +40,7 @@ data = pd.read_csv(url)
 data['Date'] = pd.to_datetime(data['Date'], format='%d/%m/%Y')
 
 # Assuming the dominant color from the new image is a shade of blue
-dominant_color = '#0000FF'  # Example dominant color (blue)
+dominant_color = '#2d2e81'  # Example dominant color (blue)
 
 # Create a line chart
 fig = go.Figure()
@@ -51,7 +51,7 @@ fig.add_trace(go.Scatter(x=data['Date'], y=data['Open'], mode='lines', name='Ope
 fig.update_layout(title='NIFTY 100 NSE - OPEN PRICE TREND',
                   xaxis_title='Date',
                   yaxis_title='Open Price',
-                  plot_bgcolor='white',  # Set background color to white
+                  plot_bgcolor='#2d2e81',  # Set background color to the same color
                   template='plotly_dark')
 
 # Create two equal-sized columns for the chart and the description
