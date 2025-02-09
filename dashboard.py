@@ -7,25 +7,10 @@ page_bg_img = '''
 <style>
 body {
 background: linear-gradient(to right, #1e3c72, #2a5298);
-color: darkgrey;
-}
-h1, h2, h3, h4, h5, h6 {
-color: darkgrey;
 }
 </style>
 '''
 st.markdown(page_bg_img, unsafe_allow_html=True)
-
-# Adding a background image
-bg_image = '''
-<style>
-[data-testid="stAppViewContainer"] {
-background: url("https://raw.githubusercontent.com/RachitCEH/BFM/main/background.jpg");
-background-size: cover;
-}
-</style>
-'''
-st.markdown(bg_image, unsafe_allow_html=True)
 
 # List of companies
 companies = ["HDFC Bank", "Infosys", "Larsen & Toubro", "Tata Consultancy Services", "Reliance Industries", "Wipro"]
@@ -46,8 +31,7 @@ data['Date'] = pd.to_datetime(data['Date'], format='%d/%m/%Y')
 # Create a line chart
 fig = go.Figure()
 
-fig.add_trace(go.Scatter(x=data['Date'], y=data['Open'], mode='lines+markers', name='Open',
-                         line=dict(color='white'), hovertemplate='Date: %{x}<br>Open Price: %{y}'))
+fig.add_trace(go.Scatter(x=data['Date'], y=data['Open'], mode='lines', name='Open', line=dict(color='white')))
 
 # Update layout of the chart
 fig.update_layout(title='NIFTY 100 NSE - OPEN PRICE TREND',
