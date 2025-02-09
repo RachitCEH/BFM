@@ -10,9 +10,10 @@ background: url("https://raw.githubusercontent.com/RachitCEH/BFM/main/abstract-f
 background-size: cover;
 }
 [data-testid="stMarkdownContainer"] {
-background-color: rgba(255, 255, 255, 0.8);  # White background with some transparency
+background-color: black;  # Black background color
+color: white;  # White font color
 padding: 20px;
-border-radius: 15px;
+border-radius: 0px;  # Rectangle shape
 }
 </style>
 '''
