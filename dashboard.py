@@ -89,29 +89,29 @@ company_descriptions = {
                  "Founded in 1994, the bank has rapidly grown to become one of the largest and most trusted financial institutions in India. "
                  "HDFC Bank offers a comprehensive suite of banking and financial services, including retail banking, wholesale banking, and treasury operations. "
                  "The bank is known for its strong emphasis on customer service, innovative products, and extensive branch network.",
-    
+
     "Infosys": "Infosys is a global leader in technology services and consulting, enabling clients in more than 50 countries. "
-               "Founded in 1981, Infosys has become a pioneer in the IT services industry, offering a wide range of services including application development, cloud computing, data analytics, and digital transformation. "
+               "Founded in 1981, Infosys has become a pioneer in the IT services industry, offering a wide range of services including application development, cloud computing, data analytics, and more. "
                "The company is renowned for its commitment to innovation, sustainability, and corporate social responsibility. "
                "With a strong focus on employee development and cutting-edge technology, Infosys continues to drive growth and deliver exceptional value to its clients.",
-    
+
     "Larsen & Toubro": "Larsen & Toubro is an Indian multinational engaged in technology, engineering, construction, manufacturing, and financial services. "
                        "Established in 1938, L&T has grown into a conglomerate with a presence in over 30 countries. "
                        "The company is known for its expertise in executing large and complex projects across various sectors, including infrastructure, power, defense, and aerospace. "
                        "L&T's commitment to quality, innovation, and sustainability has earned it a reputation as one of the most respected and reliable companies in India and beyond.",
-    
+
     "Tata Consultancy Services": "Tata Consultancy Services is a global leader in IT services, consulting, and business solutions. "
                                  "Founded in 1968, TCS is part of the Tata Group, India's largest industrial conglomerate. "
                                  "The company offers a comprehensive range of services, including software development, business process outsourcing, and IT infrastructure management. "
                                  "TCS is known for its customer-centric approach, innovative solutions, and strong focus on sustainability and corporate governance. "
                                  "With a presence in over 46 countries, TCS continues to drive digital transformation for businesses worldwide.",
-    
+
     "Reliance Industries": "Reliance Industries is a conglomerate holding company headquartered in Mumbai, India, engaged in diverse businesses. "
                            "Founded in 1966, Reliance has grown to become one of the largest and most profitable companies in India. "
                            "The company's business interests span across petrochemicals, refining, oil and gas exploration, retail, telecommunications, and digital services. "
                            "Reliance is known for its relentless pursuit of growth and innovation, making significant investments in technology and sustainable practices. "
                            "With a strong focus on customer satisfaction and operational excellence, Reliance continues to set new benchmarks in the Indian business landscape.",
-    
+
     "Wipro": "Wipro is a leading global information technology, consulting, and business process services company. "
              "Established in 1945, Wipro has evolved from a vegetable oil manufacturer to a global IT services powerhouse. "
              "The company offers a wide range of services, including IT consulting, application development, cloud computing, and cybersecurity. "
@@ -128,7 +128,7 @@ with col2:
 
 # Live News Ticker
 st.header("Live Market Updates")
-news_api_key = "ZRF0P3GRP8P9078H"
+news_api_key = "ZRF0P3GRP8P9078H"  
 response = requests.get(f"https://newsapi.org/v2/everything?q=NIFTY%20100%20ESG&apiKey={news_api_key}")
 news_data = response.json()
 
@@ -154,6 +154,7 @@ def fetch_alpha_vantage_data():
         df.columns = ["Open", "High", "Low", "Close", "Volume"]
         df.index = pd.to_datetime(df.index)
         df = df.astype(float)
+        df['% Change'] = df['Close'].pct_change() * 100  # Calculate % change in the index
         return df
     else:
         return None
