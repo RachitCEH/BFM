@@ -41,11 +41,6 @@ def get_stock_data(ticker, period='1y'):
     stock = yf.Ticker(ticker)
     return stock.history(period=period)
 
-# Function to fetch live data
-def fetch_live_data(symbol):
-    stock = yf.Ticker(symbol)
-    return stock.history(period="1d", interval="1m")  # Fetch live data with 1-minute interval
-
 # Function to get financial data (EPS, PE ratio, IPO price)
 def get_financial_data(ticker):
     stock = yf.Ticker(ticker)
@@ -161,13 +156,6 @@ st.header("Nifty 100 ESG Historical Data (Last 5 Years)")
 historical_data = get_historical_data()
 st.line_chart(historical_data['Close'])
 
-# Fetch live data for Nifty 100 ESG
-nifty100_esg_data = fetch_live_data("^NSE100ESG")
-
-# Display live data
-st.header("Nifty 100 ESG Live Data")
-st.line_chart(nifty100_esg_data['Close'])
-
 # Load CSV data and display it
 csv_data = load_csv_data("nifty_100_esg_data.csv")
 st.header("Nifty 100 ESG Data from CSV")
@@ -182,16 +170,10 @@ with col_csv:
 with col_graph:
     st.write("### Nifty 100 ESG Historical Data")
     fig_csv = go.Figure()
-    csv_data['Date'] = pd.to_datetime(csv_data['Date'], errors='coerce')  # Ensure the Date column is in datetime format
-    fig_csv.add_trace(go.Scatter(x=csv_data['Date'], y=csv_data['Open'], mode='lines', name='Open', line=dict(color='#FFFFFF')))
+    fig_csv.add_trace(go.Scatter(x=csv_data['Date'],y=csv_data['Open'], mode='lines', name='Open', line=dict(color='#FFFFFF')))
     fig_csv.update_layout(title='Nifty 100 ESG - Date vs Open',
                           xaxis_title='Date',
                           yaxis_title='Open Price',
                           plot_bgcolor='#2d2e81',  # Set background color to the same color
-                          template='plotly_dark',
-                          xaxis=dict(
-                              tickmode='linear',
-                              dtick='M12',
-                              tickformat='%Y'
-                          ))
+                          template='plotly_dark')
     st.plotly_chart(fig_csv, use_container_width=True)
