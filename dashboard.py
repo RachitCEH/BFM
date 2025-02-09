@@ -4,6 +4,8 @@ import plotly.graph_objects as go
 import yfinance as yf
 import requests
 from datetime import datetime
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 # Set custom background image for the dashboard
 page_bg_img = '''
@@ -41,6 +43,11 @@ def get_stock_data(ticker, period='1y'):
     stock = yf.Ticker(ticker)
     return stock.history(period=period)
 
+# Function to fetch live data
+def fetch_live_data(symbol):
+    stock = yf.Ticker(symbol)
+    return stock.history(period="1d", interval="1m")  # Fetch live data with 1-minute interval
+
 # Function to get financial data (EPS, PE ratio, IPO price)
 def get_financial_data(ticker):
     stock = yf.Ticker(ticker)
@@ -60,6 +67,18 @@ def get_historical_data():
 @st.cache_data
 def load_csv_data(file_path):
     return pd.read_csv(file_path, parse_dates=['Date'], dayfirst=True)
+
+# Function to load heatmap data
+@st.cache_data
+def load_heatmap_data(file_path):
+    return pd.read_csv(file_path)
+
+# Function to generate heatmap
+def generate_heatmap(data):
+    plt.figure(figsize=(10, 8))
+    heatmap = sns.heatmap(data, annot=True, cmap='coolwarm', cbar=True, square=True, linewidths=.5)
+    plt.title("TOP 10 Companies in NIFTY 100 ESG")
+    st.pyplot(plt)
 
 # Create a dropdown for company selection below the line chart section
 selected_company = st.selectbox('Select a Company', companies)
@@ -152,9 +171,20 @@ st.write(f"**PE Ratio:** {pe_ratio}")
 st.write(f"**IPO Price:** {ipo_price if ipo_price else 'N/A'}")
 
 # Fetch and display historical data for Nifty 100 ESG
+st.header("Nifty 100 ESG Historical Data (Last 5 Years)")
+historical_data = get_historical_data()
+st.line_chart(historical_data['Close'])
+
+# Fetch live data for Nifty 100 ESG
+nifty100_esg_data = fetch_live_data("^NSE100ESG")
+
+# Display live data
+st.header("Nifty 100 ESG Live Data")
+st.line_chart(nifty100_esg_data['Close'])
+
 # Load CSV data and display it
 csv_data = load_csv_data("nifty_100_esg_data.csv")
-st.header("Nifty 100 ESG Historical Data (Last 5 Years)")
+st.header("Nifty 100 ESG Data from CSV")
 
 # Create two columns for the CSV data and the graph
 col_csv, col_graph = st.columns(2)
@@ -179,3 +209,8 @@ with col_graph:
                               tickformat='%Y'
                           ))
     st.plotly_chart(fig_csv, use_container_width=True)
+
+# Load heatmap data and generate heatmap
+heatmap_data = load_heatmap_data("Heatmap.csv")
+st.header("TOP 10 Companies in NIFTY 100 ESG")
+generate_heatmap(heatmap_data)
