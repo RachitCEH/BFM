@@ -55,5 +55,5 @@ with col2:
     The NIFTY 100 ESG Index is designed to reflect the performance of companies within the NIFTY 100 index that meet certain environmental, social, and governance (ESG) criteria. 
     The index includes companies that are leaders in ESG practices while also considering their financial performance. 
     It aims to provide investors with an ESG-compliant benchmark that represents the top 100 companies in India. 
-    This allows investors to make more informed decisions by considering long-term sustainability and ethical business practices, ensuring responsible investment in leading companies.
+    This allows investors to make more informed decisionS.
     """)
