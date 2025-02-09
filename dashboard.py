@@ -31,13 +31,13 @@ data['Date'] = pd.to_datetime(data['Date'], format='%d/%m/%Y')
 # Create a line chart
 fig = go.Figure()
 
-fig.add_trace(go.Scatter(x=data['Date'], y=data['Open'], mode='lines', name='Open', line=dict(color='green')))
+fig.add_trace(go.Scatter(x=data['Date'], y=data['Open'], mode='lines', name='Open', line=dict(color='white')))
 
 # Update layout of the chart
 fig.update_layout(title='NIFTY 100 NSE - OPEN PRICE TREND',
                   xaxis_title='Date',
                   yaxis_title='Open Price',
-                  plot_bgcolor='white',
+                  plot_bgcolor='rgba(173, 216, 230, 0.5)',  # light blue with 50% transparency
                   template='plotly_dark')
 
 # Create two equal-sized columns for the chart and the description
